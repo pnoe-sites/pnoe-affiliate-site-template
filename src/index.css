@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* PNOĒ Wellness Color Palette */
+    --background: 0 0% 100%; /* White */
+    --foreground: 0 0% 10%; /* Off Black #1A1A1A */
+    --card: 0 0% 100%; /* White */
+    --card-foreground: 0 0% 10%; /* Off Black */
+    --popover: 0 0% 100%; /* White */
+    --popover-foreground: 0 0% 10%; /* Off Black */
+    --primary: 161 35% 22%; /* Forest Green #244C3F */
+    --primary-foreground: 0 0% 100%; /* White text on forest green */
+    --secondary: 205 49% 23%; /* Ocean Blue #1E3A56 */
+    --secondary-foreground: 0 0% 100%; /* White text on ocean blue */
+    --muted: 140 32% 93%; /* Pale Sage #E9F4EF */
+    --muted-foreground: 161 35% 22%; /* Forest Green on pale sage */
+    --accent: 198 42% 94%; /* Pale Blue #EAF3F8 */
+    --accent-foreground: 205 49% 23%; /* Ocean Blue on pale blue */
+    --destructive: 0 84% 60%; /* Red for errors */
+    --destructive-foreground: 0 0% 100%; /* White text on red */
+    --border: 140 20% 85%; /* Subtle sage border */
+    --input: 140 20% 85%; /* Subtle sage input border */
+    --ring: 161 35% 22%; /* Forest Green focus ring */
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Dark mode with PNOĒ colors */
+    --background: 161 35% 12%; /* Dark Forest Green */
+    --foreground: 140 32% 93%; /* Pale Sage text */
+    --card: 161 35% 15%; /* Slightly lighter dark green */
+    --card-foreground: 140 32% 93%; /* Pale Sage */
+    --popover: 161 35% 15%; /* Slightly lighter dark green */
+    --popover-foreground: 140 32% 93%; /* Pale Sage */
+    --primary: 140 32% 93%; /* Pale Sage (inverted) */
+    --primary-foreground: 161 35% 22%; /* Forest Green */
+    --secondary: 198 42% 94%; /* Pale Blue */
+    --secondary-foreground: 205 49% 23%; /* Ocean Blue */
+    --muted: 161 20% 20%; /* Dark muted green */
+    --muted-foreground: 140 20% 70%; /* Light sage */
+    --accent: 205 30% 25%; /* Dark ocean blue */
+    --accent-foreground: 198 42% 94%; /* Pale Blue */
+    --destructive: 0 62% 50%; /* Muted red */
+    --destructive-foreground: 0 0% 100%; /* White */
+    --border: 161 20% 25%; /* Dark border */
+    --input: 161 20% 25%; /* Dark input border */
+    --ring: 140 32% 93%; /* Pale Sage focus ring */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Plus Jakarta Sans for headings and display text */
+  h1, h2, h3, h4, h5, h6,
+  .font-display,
+  .text-hero-desktop,
+  .text-hero-mobile,
+  .text-h1,
+  .text-h2,
+  .text-h3 {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-optical-sizing: auto;
+  }
+}
+
+@layer utilities {
+  /* Font utility classes */
+  .font-inter {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+  }
+  
+  .font-plus-jakarta {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-optical-sizing: auto;
+  }
+}

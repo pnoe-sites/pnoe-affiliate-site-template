@@ -1,0 +1,365 @@
+{
+  "config": {
+    "name": "Evergreen Wellness Clinic",
+    "tagline": "Clinical testing for longevity",
+    "heroImage": "/images/defaults/Hero.jpg",
+    "missionHeadline": "We create clarity, autonomy, and velocity for every wellness decision.",
+    "missionBody": "Diagnostics, coaching, and protocols live in one ritual so you never have to guess what comes next.",
+    "holisticHeadline": "A cinematic blueprint that stacks diagnostics, therapy, and rituals.",
+    "holisticBody": "Think of it as an editorial layout for your body: a bold top block of testing, a supporting narrative of care, and a full-bleed image of how you want to feel.",
+    "colors": {
+      "primary": "#244C3F",
+      "secondary": "#1E3A56",
+      "accent": "#E9F4EF"
+    },
+    "contact": {
+      "email": "hello@example.com",
+      "phone": "+1 (555) 123-4567",
+      "location": "New York, NY",
+      "socials": []
+    },
+    "images": {
+      "mission": "/images/defaults/Mission.jpg",
+      "ourHolisticMethod": "/images/defaults/Our-Holistic-Method.jpg",
+      "ourOfferings": "/images/defaults/Our-Offerings.jpg",
+      "scheduleConsultation": "/images/defaults/Schedule-Consultation.jpg",
+      "aboutUs": "/images/defaults/what-we-offer/About-Us.jpg"
+    },
+    "heroMeta": [
+      {
+        "label": "WHOLE-PERSON VIEW",
+        "value": "We look at your history, lifestyle, goals, and key markers to see the full picture of your health."
+      },
+      {
+        "label": "PERSONAL ROADMAP",
+        "value": "Your movement, nutrition, recovery, and daily habits are woven into one simple, sustainable plan."
+      },
+      {
+        "label": "ONGOING GUIDANCE",
+        "value": "Regular check-ins, adjustments, and accountability so your plan evolves as you do."
+      }
+    ],
+    "missionValues": [
+      {
+        "title": "Precision Baselines",
+        "description": "Every engagement begins with diagnostics. We build plans from verified data, not assumptions.",
+        "icon": "target"
+      },
+      {
+        "title": "Clinical + Human",
+        "description": "We merge longevity science with day-to-day coaching so protocols fit real life.",
+        "icon": "heart"
+      },
+      {
+        "title": "Systems Approach",
+        "description": "Fitness, metabolism, recovery, and mindset are treated as one continuous ecosystem.",
+        "icon": "activity"
+      }
+    ],
+    "whoWeHelpPanels": [
+      {
+        "id": "01",
+        "title": "Athletes",
+        "description": "Performance blocks for VO₂, recovery, and readiness.",
+        "tag": "Performance",
+        "image": "/images/defaults/what-we-offer/VO2-Max-Testing.jpg"
+      },
+      {
+        "id": "02",
+        "title": "Executives",
+        "description": "Cognitive clarity, stress control, and metabolic balance.",
+        "tag": "Leadership",
+        "image": "/images/defaults/what-we-offer/IV-Therapy.jpg"
+      },
+      {
+        "id": "03",
+        "title": "Wellness Builders",
+        "description": "Annual planning for people investing early in healthspan.",
+        "tag": "Longevity",
+        "image": "/images/defaults/what-we-offer/Supplements.jpg"
+      },
+      {
+        "id": "04",
+        "title": "Recovery Patients",
+        "description": "Protocols that stabilize inflammation and restart energy.",
+        "tag": "Rehab",
+        "image": "/images/defaults/what-we-offer/Red-Light-Therapy.jpg"
+      },
+      {
+        "id": "05",
+        "title": "Clinical Partners",
+        "description": "White-label testing infrastructure for medical teams.",
+        "tag": "Partnerships",
+        "image": "/images/defaults/what-we-offer/Lab-Testing-Blood.jpg"
+      }
+    ],
+    "outcomes": [
+      {
+        "label": "01",
+        "title": "Increased Energy",
+        "description": "Feel alert daily with mitochondrial support and nervous system balancing."
+      },
+      {
+        "label": "02",
+        "title": "Better Performance",
+        "description": "Train smarter with detailed load tracking, VO₂ data, and recovery coaching."
+      },
+      {
+        "label": "03",
+        "title": "Longevity",
+        "description": "Extend healthspan through personalized metabolic and hormone protocols."
+      },
+      {
+        "label": "04",
+        "title": "Sleep Quality",
+        "description": "Rebuild circadian rhythms and deep sleep architecture with precision tracking."
+      },
+      {
+        "label": "05",
+        "title": "Inflammation Control",
+        "description": "Stabilize systemic inflammation markers with guided therapies and nutrition."
+      }
+    ]
+  },
+  "services": [
+    {
+      "id": "red-light-therapy",
+      "slug": "red-light-therapy",
+      "title": "Red-Light Therapy",
+      "category": "tech-therapies",
+      "shortDescription": "Short sessions for recovery, skin support, and everyday vitality.",
+      "longDescription": "A red-light session is calm and closely supervised. After a brief check-in, you'll settle into a comfortable position and complete a short, controlled exposure while the device runs, with protective eyewear provided when needed. Sessions are brief by design and scheduled to fit around training and work. Red light is a practical option after workouts, during skin-focused routines, or whenever you want a low-stress reset without downtime. Many clients pair red light with cryotherapy on recovery days or with IV therapy during high-demand weeks to keep momentum without adding time. Safety and comfort come first. We outline the basics before your visit, set a sensible cadence, and keep scheduling straightforward so it's easy to stay consistent.",
+      "duration": "15-20 minutes",
+      "pricing": {
+        "display": "from",
+        "currency": "USD",
+        "amount": 45
+      },
+      "imageUrl": "/images/defaults/what-we-offer/Red-Light-Therapy.jpg",
+      "pairsWith": [
+        "cryotherapy",
+        "iv-therapy"
+      ]
+    },
+    {
+      "id": "cryotherapy",
+      "slug": "cryotherapy",
+      "title": "Cryotherapy",
+      "category": "tech-therapies",
+      "shortDescription": "Brief cold sessions that leave you refreshed and ready.",
+      "longDescription": "A cryotherapy visit is simple and closely supervised. After a quick screening, you change into protective gear and complete a short, controlled cold exposure under staff guidance. Sessions are brief by design and scheduled to fit around training and work. Cryo is a practical option during heavy training blocks, demanding work weeks, or whenever you want a mental and physical refresh. Many clients alternate cryo with Red-Light Therapy on recovery days to keep momentum without adding time. Safety and comfort come first. We outline clear steps before your session, pace exposure gradually, and keep scheduling straightforward so it's easy to stay consistent.",
+      "duration": "2-3 minutes",
+      "pricing": {
+        "display": "from",
+        "amount": 65,
+        "currency": "USD"
+      },
+      "imageUrl": "/images/defaults/what-we-offer/Cryotherapy.jpg",
+      "pairsWith": [
+        "red-light-therapy",
+        "rmr-testing"
+      ]
+    },
+    {
+      "id": "iv-therapy",
+      "slug": "iv-therapy",
+      "title": "IV Therapy",
+      "category": "alternative-medicine",
+      "shortDescription": "Comfortable sessions with blends for energy, immune support, and recovery.",
+      "longDescription": "IV sessions are straightforward. After a brief intake, you're seated comfortably while a blend suited to your goal is administered. Most visits take about 30 to 45 minutes. You'll leave with hydration, simple guidance for the rest of the day, and a suggested cadence based on your schedule and aims. IV drips are a practical choice during busy weeks, after travel, or when training volume rises and energy dips. Many clients pair infusions with Red-Light Therapy on recovery days and use daily Supplements to extend benefits between visits.",
+      "duration": "30-45 minutes",
+      "pricing": {
+        "display": "from",
+        "amount": 125,
+        "currency": "USD"
+      },
+      "imageUrl": "/images/defaults/what-we-offer/IV-Therapy.jpg",
+      "pairsWith": [
+        "supplements",
+        "red-light-therapy"
+      ]
+    },
+    {
+      "id": "supplements",
+      "slug": "supplements",
+      "title": "Supplements",
+      "category": "alternative-medicine",
+      "shortDescription": "Curated essentials that fit your routine and goals.",
+      "longDescription": "Our supplement recommendations focus on the essentials and stay goal-led: energy, immune support, recovery, and skin. We start with a short intake and review any available data, then outline exactly what to take, when to take it, and for how long. The guidance is simple to follow and easy to keep, and it can be adjusted at scheduled check-ins. Supplements integrate naturally with any program and are meant to complement your sessions and daily habits rather than complicate them.",
+      "duration": "Consultation: 15-20 minutes",
+      "pricing": {
+        "display": "hidden",
+        "currency": "USD"
+      },
+      "imageUrl": "/images/defaults/what-we-offer/Supplements.jpg",
+      "pairsWith": [
+        "iv-therapy",
+        "lab-testing"
+      ]
+    },
+    {
+      "id": "vo2-max-testing",
+      "slug": "vo2-max-testing",
+      "title": "VO₂ Max Testing",
+      "category": "biometric-testing",
+      "shortDescription": "Cardiopulmonary testing to set appropriate training zones.",
+      "longDescription": "VO2 Max Testing is a supervised assessment that shows your peak oxygen use and identifies your ventilatory thresholds VT1 and VT2. These markers let us set training zones from your own physiology instead of generic estimates. With accurate zones in place, we can guide intensity distribution, choose the right session types, and plan sensible progression. Your visit is straightforward. There is a brief intake and screening, then a controlled effort that typically lasts eight to ten minutes where available. Staff are present throughout. Results are used to set zone targets for your sessions and to outline a weekly structure that fits your goals. We also suggest when to retest so you can track change over time. Many clients pair this test with RMR Testing to align calories and macros with training, or with Red Light Therapy and Cryotherapy during recovery focused weeks.",
+      "duration": "8-10 minutes (plus setup)",
+      "pricing": {
+        "display": "exact",
+        "amount": 195,
+        "currency": "USD"
+      },
+      "imageUrl": "/images/defaults/what-we-offer/VO2-Max-Testing.jpg",
+      "pairsWith": [
+        "rmr-testing",
+        "lab-testing"
+      ]
+    },
+    {
+      "id": "rmr-testing",
+      "slug": "rmr-testing",
+      "title": "Resting Metabolic Rate (RMR)",
+      "category": "biometric-testing",
+      "shortDescription": "RMR testing to set a precise daily target and inform macro guidance.",
+      "longDescription": "RMR testing is a calm, seated breathing assessment that shows how many calories your body uses at rest. With this number, we set a clear daily target and outline simple macro ranges so your meals match your goals. Your visit is straightforward. You arrive rested, the session is quiet and typically takes 15 to 30 minutes, and we review results the same day when possible. We will share any fasting or caffeine guidance at booking so you feel prepared. Your package includes the RMR assessment, a plain-language summary with a practical plan, and a follow up consult to confirm next steps. Many clients pair RMR with VO2 Max Testing to align training intensity, or with Blood Lab Testing to refine nutrition priorities. You can repeat the test when your goals or body composition change. The assessment is non invasive and designed to fit a normal day.",
+      "duration": "15-30 minutes",
+      "pricing": {
+        "display": "exact",
+        "amount": 125,
+        "currency": "USD"
+      },
+      "imageUrl": "/images/defaults/what-we-offer/Resting-Metabolic-Rate-RMR.png",
+      "pairsWith": [
+        "vo2-max-testing",
+        "lab-testing"
+      ]
+    },
+    {
+      "id": "lab-testing",
+      "slug": "lab-testing",
+      "title": "Lab Testing (Blood)",
+      "category": "biometric-testing",
+      "shortDescription": "Straightforward blood panels that tailor sessions and daily habits.",
+      "longDescription": "Blood testing gives a practical snapshot of where you are today. Panels commonly include metabolic markers, a lipid profile when indicated, and selected nutrients, with additional labs added as appropriate to your goals. We schedule the draw at the clinic or a partner location, then share results through the portal or a brief consult. Findings are summarized in plain language and added to your plan so next steps are easy to follow. Lab results guide real decisions. They help select or adjust IV blends and supplement focus. They calibrate session cadence and recovery emphasis, and they flag items that merit follow up or a retest later. Many clients pair blood work with targeted Supplements or enroll in the Metabolic Support program to keep progress organized between visits.",
+      "duration": "Blood draw: 5-10 minutes",
+      "pricing": {
+        "display": "from",
+        "amount": 150,
+        "currency": "USD"
+      },
+      "imageUrl": "/images/defaults/what-we-offer/Lab-Testing-Blood.jpg",
+      "pairsWith": [
+        "supplements",
+        "vo2-max-testing",
+        "rmr-testing"
+      ]
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "testimonial-1",
+      "name": "Sarah Mitchell",
+      "role": "Marathon Runner",
+      "photo": "/images/testimonials/sarah.jpg",
+      "quote": "VO2 testing changed how I train. I finally have zones that actually match my physiology.",
+      "rating": 5
+    },
+    {
+      "id": "testimonial-2",
+      "name": "James Chen",
+      "role": "Tech Executive",
+      "photo": "/images/testimonials/james.jpg",
+      "quote": "RMR testing showed I was under-eating by 400 calories. Energy is up, weight is stable.",
+      "rating": 5
+    },
+    {
+      "id": "testimonial-3",
+      "name": "Maria Rodriguez",
+      "role": "Wellness Coach",
+      "photo": "/images/testimonials/maria.jpg",
+      "quote": "The holistic approach makes everything fit together. No more guessing what to prioritize.",
+      "rating": 5
+    }
+  ],
+  "team": [
+    {
+      "id": "team-1",
+      "name": "Dr. Emily Carson",
+      "title": "Lead Clinician",
+      "bio": "Board-certified in sports medicine with 12 years experience translating lab results into actionable programs.",
+      "photo": "/images/team/emily.jpg",
+      "role": "clinician"
+    },
+    {
+      "id": "team-2",
+      "name": "Michael Torres",
+      "title": "Exercise Physiologist",
+      "bio": "Specializes in VO2 and metabolic testing. Helps clients understand their data and apply it to training.",
+      "photo": "/images/team/michael.jpg",
+      "role": "technician"
+    },
+    {
+      "id": "team-3",
+      "name": "Lisa Hamilton",
+      "title": "Client Coordinator",
+      "bio": "Manages scheduling, follow-ups, and ensures every visit runs smoothly from booking to checkout.",
+      "photo": "/images/team/lisa.jpg",
+      "role": "coordinator"
+    }
+  ],
+  "packages": [
+    {
+      "id": "essential",
+      "name": "Essential",
+      "description": "Start with the fundamentals. Get your baseline metrics and a clear action plan.",
+      "inclusions": [
+        "RMR Testing",
+        "Blood Lab Panel (Basic)",
+        "Initial Consultation",
+        "Personalized Plan"
+      ],
+      "pricing": {
+        "amount": 299,
+        "currency": "USD",
+        "billingPeriod": "one-time"
+      },
+      "featured": false
+    },
+    {
+      "id": "plus",
+      "name": "Plus",
+      "description": "Add cardiopulmonary testing and recovery sessions for a complete picture.",
+      "inclusions": [
+        "Everything in Essential",
+        "VO₂ Max Testing",
+        "2x Red-Light or Cryo Sessions",
+        "Follow-up Consultation"
+      ],
+      "pricing": {
+        "amount": 549,
+        "currency": "USD",
+        "billingPeriod": "one-time"
+      },
+      "featured": true
+    },
+    {
+      "id": "complete",
+      "name": "Complete",
+      "description": "The full longevity suite with ongoing support and quarterly retests.",
+      "inclusions": [
+        "Everything in Plus",
+        "IV Therapy Session",
+        "Supplement Protocol",
+        "Quarterly Retest Package",
+        "Priority Scheduling"
+      ],
+      "pricing": {
+        "amount": 899,
+        "currency": "USD",
+        "billingPeriod": "one-time"
+      },
+      "featured": false
+    }
+  ]
+}
