@@ -2,3 +2,9 @@ node_modules/
 dist/
 *.local
 .DS_Store
+
+# Plexon workspace data. The site is built inside a Plexon workspace, so this
+# folder is always present: sessions, datasets, downloads and the site keyring
+# live in it, and none of that belongs in a clinic public repository.
+.plexon/
+.claude
