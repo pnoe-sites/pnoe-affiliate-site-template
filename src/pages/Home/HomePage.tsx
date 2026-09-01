@@ -10,6 +10,7 @@ import {
 import { useConfig } from '@/config/ConfigProvider'
 import { defaultMissionValues } from '@/constants/missionValues'
 import { api, getImageUrl } from '@/lib/api'
+import { brandLabel } from '@/lib/brand'
 import type { Service, Testimonial } from '@shared/schemas'
 import { useQuery } from '@tanstack/react-query'
 import {
@@ -62,15 +63,15 @@ export default function HomePage() {
   const defaultPersonPhoto = getImageUrl('/images/defaults/person.png')
   const heroMeta = config?.heroMeta ?? []
   const missionValues = config?.missionValues ?? []
-  const missionTitle = 'The PNOĒ Advantage'
+  const missionTitle = brandLabel(config, 'The {clinic} Advantage', 'Our advantage')
   const missionEyebrow = 'Why choose us?'
   const missionYear = ''
   const whoWeHelpPanels = config?.whoWeHelpPanels ?? []
   const outcomes = config?.outcomes ?? []
   const missionHeadline = config?.missionHeadline ?? 'We create clarity, autonomy, and velocity for every wellness decision.'
-  const missionBody = config?.missionBody ?? 'Diagnostics, coaching, and protocols live in one ritual so you never have to guess what comes next.'
-  const holisticHeadline = config?.holisticHeadline ?? 'A cinematic blueprint that stacks diagnostics, therapy, and rituals.'
-  const holisticBody = config?.holisticBody ?? 'Think of it as an editorial layout for your body—a bold top block of testing, a supporting narrative of care, and a full-bleed image of how you want to feel.'
+  const missionBody = config?.missionBody ?? 'Testing, treatment and follow-up are handled in one place, so nothing falls between appointments.'
+  const holisticHeadline = config?.holisticHeadline ?? 'Measure first, then treat, then check it worked.'
+  const holisticBody = config?.holisticBody ?? 'Each step depends on the one before it. That is why we start with what your results actually say rather than with a treatment.'
 
   return (
     <div>
@@ -87,25 +88,25 @@ export default function HomePage() {
         }}
       >
         {!config?.heroImage && (
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#14271f,#050c09)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgb(var(--brand-surface-dark)),rgb(var(--brand-surface-deep)))]" />
         )}
         <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center space-y-6">
             <h1 className="text-[clamp(3rem,6vw,4.55rem)] font-bold leading-[1.05]">
-              Clinical testing that feels cinematic, modern, and human.
+              Testing, treatment and follow-up, in one place.
             </h1>
             <p className="text-body-lg text-white/90 leading-relaxed max-w-content mx-auto">
-              We orchestrate diagnostics, coaching, and therapy into one living protocol.
-              Data becomes design—fluid, personal, and built to move with you.
+              We measure what is going on, tell you what it means, and agree the next
+              step with you. Then we check whether it worked.
             </p>
             <div className="flex flex-col sm:flex-row sm:items-center justify-center gap-4 pt-4">
               <Link to="/booking">
                 <Button size="lg" className="bg-white text-deep-forest px-8 py-6">
-                  Schedule a consult
+                  Book a consultation
                 </Button>
               </Link>
               <Link to="/offerings" className="text-sm font-semibold text-lime-glow inline-flex items-center gap-2">
-                Explore the method <MoveRight className="h-4 w-4" />
+                See how we work <MoveRight className="h-4 w-4" />
               </Link>
             </div>
             <div className="grid gap-6 sm:grid-cols-3 pt-6 max-w-3xl mx-auto">
@@ -121,7 +122,7 @@ export default function HomePage() {
       </section>
 
       {/* Mission / Values */}
-      <section className="bg-[#def3d6] py-24 text-forest-green">
+      <section className="bg-[rgb(var(--brand-surface-tint))] py-24 text-forest-green">
         <div className="container">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,0.55fr)_1fr] items-center">
             <div className="space-y-6 max-w-2xl">
@@ -168,10 +169,10 @@ export default function HomePage() {
         <div className="container">
           <div className="max-w-4xl mx-auto text-left">
             <p className="text-xs tracking-[0.35em] uppercase text-forest-green/70">Services</p>
-            <h2 className="mt-4 text-[2.8rem] font-semibold leading-[1.05] text-forest-green">Clinical protocols, sequenced.</h2>
+            <h2 className="mt-4 text-[2.8rem] font-semibold leading-[1.05] text-forest-green">What we offer</h2>
             <p className="mt-4 max-w-2xl text-body-lg text-off-black/80">
-              Scroll the list to open each ritual. Every line holds the diagnostics, therapies, and concierge layer that drive
-              the experience end-to-end.
+              Open any service to see what it involves, how long it takes and what it
+              costs.
             </p>
           </div>
           <div className="mt-16">
@@ -201,10 +202,10 @@ export default function HomePage() {
                     <div className="grid gap-10 lg:grid-cols-[minmax(0,0.6fr)_minmax(0,0.4fr)]">
                       <div className="space-y-5">
                         <p className="text-base leading-relaxed">
-                          {service.longDescription || service.shortDescription || 'Detailed flow coming soon.'}
+                          {service.longDescription || service.shortDescription || 'Details coming soon.'}
                         </p>
                         <Link to="/offerings" className="inline-flex items-center gap-2 text-sm font-semibold text-forest-green">
-                          Build this stack <MoveRight className="h-4 w-4" />
+                          Book this service <MoveRight className="h-4 w-4" />
                         </Link>
                       </div>
                       <div className="space-y-4">
@@ -218,16 +219,16 @@ export default function HomePage() {
                           </div>
                         ) : (
                           <div className="rounded-[14px] border border-forest-green/10 bg-white/60 p-6 text-sm text-forest-green/60">
-                            Visual assets coming soon.
+                            No photo for this one yet.
                           </div>
                         )}
                         <div className="rounded-[14px] border border-forest-green/10 bg-white/80 p-6 shadow-inner">
-                          <p className="text-xs uppercase tracking-[0.4em] text-forest-green/50">Outcome focus</p>
+                          <p className="text-xs uppercase tracking-[0.4em] text-forest-green/50">Category</p>
                           <p className="mt-3 text-base font-semibold text-forest-green">
-                            {service.category?.replace('-', ' ') || 'Longevity stack'}
+                            {service.category?.replace('-', ' ') || 'General'}
                           </p>
                           <p className="mt-2 text-sm text-forest-green/70">
-                            Includes diagnostics, therapy, and rituals tuned to your data.
+                            Ask us what this would involve for you.
                           </p>
                         </div>
                       </div>
@@ -240,13 +241,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Holistic Method Editorial Block */}
+      {/* How we work */}
       <section className="relative">
         <div className="bg-forest-green text-white">
           <div className="container py-24">
             <div className="grid gap-10 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,0.3fr)] lg:items-start">
               <div className="space-y-6">
-                <p className="text-xs uppercase tracking-[0.35em] text-white/70">Holistic Method</p>
+                <p className="text-xs uppercase tracking-[0.35em] text-white/70">{config?.methodName ?? 'How we work'}</p>
                 <h2 className="text-[3.2rem] font-semibold leading-tight">
                   {holisticHeadline}
                 </h2>
@@ -256,7 +257,7 @@ export default function HomePage() {
               </div>
               <div className="flex lg:justify-end">
                 <Link to="/holistic-method" className="text-sm font-semibold text-lime-200 inline-flex items-center gap-2">
-                  Latest Work <ArrowUpRight className="h-4 w-4" />
+                  See how we work <ArrowUpRight className="h-4 w-4" />
                 </Link>
               </div>
             </div>
@@ -284,9 +285,9 @@ export default function HomePage() {
         <div className="container">
           <div className="text-center max-w-2xl mx-auto">
             <p className="text-xs tracking-[0.3em] uppercase text-white/60">Who we help</p>
-            <h2 className="text-[2.5rem] font-semibold mt-4">Five verticals, one operating system.</h2>
+            <h2 className="text-[2.5rem] font-semibold mt-4">The people we see most</h2>
             <p className="text-body-lg text-white/65 mt-4">
-              Editorial-style panels detail how each cohort engages with our lab-to-life rituals.
+              Each group works with us a little differently. Here is what that looks like.
             </p>
           </div>
           <div className="mt-16">
@@ -318,9 +319,9 @@ export default function HomePage() {
         <div className="container">
           <div className="text-center max-w-2xl mx-auto">
             <p className="text-xs tracking-[0.3em] uppercase text-white/70">Outcomes</p>
-            <h2 className="text-[2.5rem] font-semibold text-white mt-4">Future-forward results we calibrate for.</h2>
+            <h2 className="text-[2.5rem] font-semibold text-white mt-4">What people come to us for</h2>
             <p className="text-body-lg text-white/75 leading-relaxed mt-4">
-              Every engagement outputs tangible shifts across energy, cognition, recovery, and longevity markers.
+              The changes patients ask about most often, and what we track to know whether they are happening.
             </p>
           </div>
           <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -344,7 +345,7 @@ export default function HomePage() {
         <div className="container">
           <div className="text-center mb-12">
             <p className="text-xs tracking-[0.35em] uppercase text-white/60">Testimonials</p>
-            <h2 className="text-[2.5rem] font-semibold text-white mt-4">Dark-room stories with cinematic focus.</h2>
+            <h2 className="text-[2.5rem] font-semibold text-white mt-4">What patients say</h2>
           </div>
           <div className="max-w-4xl mx-auto">
             <Carousel opts={{ align: 'start', loop: true }}>
@@ -371,9 +372,6 @@ export default function HomePage() {
                         </div>
                         <div>
                           <p className="text-2xl md:text-3xl font-semibold text-white leading-tight">“{testimonial.quote}”</p>
-                          <p className="text-white/60 text-base mt-6">
-                            These are living labs—constant feedback loops where your biology, habits, and aspirations speak the same design language.
-                          </p>
                         </div>
                       </div>
                     </div>
@@ -391,19 +389,19 @@ export default function HomePage() {
       {/* CTA Section */}
       <section className="bg-deep-forest text-white py-24">
         <div className="container text-center">
-          <h2 className="text-h2 font-semibold mb-6">Ready to start your journey?</h2>
+          <h2 className="text-h2 font-semibold mb-6">Ready to book?</h2>
           <p className="text-body-lg mb-12 max-w-content mx-auto opacity-95 leading-relaxed">
-            Schedule a consultation to discuss your goals and create a personalized plan
+            Tell us what you need and we will find a time.
           </p>
           <div className="flex gap-6 justify-center flex-wrap">
             <Link to="/booking">
               <Button size="lg" className="bg-white text-forest-green hover:bg-white/90">
-                Book Consultation
+                Book a consultation
               </Button>
             </Link>
             <Link to="/offerings">
               <Button size="lg" variant="outline" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-forest-green">
-                Explore Services
+                See our services
               </Button>
             </Link>
           </div>

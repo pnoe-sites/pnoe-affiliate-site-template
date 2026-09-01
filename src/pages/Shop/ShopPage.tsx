@@ -3,7 +3,10 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useConfig } from '@/config/ConfigProvider'
 import { api } from '@/lib/api'
+import { formatPrice } from '@/lib/money'
+import { brandLabel } from '@/lib/brand'
 import { zodResolver } from '@hookform/resolvers/zod'
 import type { Package } from '@shared/schemas'
 import { useQuery } from '@tanstack/react-query'
@@ -25,6 +28,11 @@ const checkoutSchema = z.object({
 type CheckoutForm = z.infer<typeof checkoutSchema>
 
 export default function ShopPage() {
+  const { config } = useConfig()
+  // Whatever the clinic wants stated next to its packages: turnaround, what is
+  // included, how often you would come in. Empty is a valid answer and the row
+  // is dropped rather than filled with a promise nobody made.
+  const packageFacts = config?.packageFacts ?? []
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null)
   const [showCheckout, setShowCheckout] = useState(false)
   const [orderComplete, setOrderComplete] = useState(false)
@@ -73,12 +81,12 @@ export default function ShopPage() {
             </div>
             <CardTitle className="text-3xl text-white">Order Confirmed</CardTitle>
             <CardDescription className="text-white/70">
-              Thank you for your purchase. We'll reach out shortly to choreograph your services.
+              Thank you. We have your order and will be in touch to arrange the first appointment.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <p className="text-sm text-white/60">
-              A confirmation email with next steps and scheduling options just left our studio.
+              Someone from the clinic will contact you using the details you gave us.
             </p>
             <Button
               className="rounded-full bg-lime-glow px-6 text-charcoal hover:bg-lime-glow/90"
@@ -99,29 +107,27 @@ export default function ShopPage() {
   return (
     <div className="bg-charcoal text-white">
       {/* Hero Section */}
-      <section className="bg-[radial-gradient(circle_at_top,_#113223,_#050c09)] py-24">
+      <section className="bg-[radial-gradient(circle_at_top,rgb(var(--brand-surface-dark)),rgb(var(--brand-surface-deep)))] py-24">
         <div className="container space-y-12">
           <div className="space-y-6">
-            <p className="text-xs uppercase tracking-[0.4em] text-white/60">PNOĒ Packages</p>
+            <p className="text-xs uppercase tracking-[0.4em] text-white/60">{brandLabel(config, '{clinic} Packages', 'Packages')}</p>
             <h1 className="text-[clamp(2.5rem,4vw,3.8rem)] font-semibold leading-tight">
-              Curated stacks that move you from testing to ritual.
+              Packages that bundle what most people need, at one price.
             </h1>
             <p className="max-w-3xl text-body-lg text-white/80">
-              Choose a cinematic bundle—each one weaves diagnostics, therapy, and ongoing coaching into a single, trackable experience.
+              Each one groups testing, treatment and follow-up so you are not choosing them one at a time.
             </p>
           </div>
-          <div className="grid gap-6 text-sm text-white/60 sm:grid-cols-3">
-            {[
-              { label: 'Average onboarding time', value: '72 hours' },
-              { label: 'Protocols included', value: 'Testing + Therapy + Ritual' },
-              { label: 'Support cadence', value: 'Weekly touchpoints' },
-            ].map((item) => (
-              <div key={item.label} className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                <p className="text-xs uppercase tracking-[0.4em] text-white/50">{item.label}</p>
-                <p className="mt-2 text-xl text-white">{item.value}</p>
-              </div>
-            ))}
-          </div>
+          {packageFacts.length > 0 && (
+            <div className="grid gap-6 text-sm text-white/60 sm:grid-cols-3">
+              {packageFacts.map((item) => (
+                <div key={item.label} className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                  <p className="text-xs uppercase tracking-[0.4em] text-white/50">{item.label}</p>
+                  <p className="mt-2 text-xl text-white">{item.value}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -151,14 +157,14 @@ export default function ShopPage() {
                   <div className="flex items-center justify-between">
                     <span>Package</span>
                     <span className="text-base font-semibold text-white">
-                      ${selectedPackage.pricing.amount}
+                      {formatPrice(selectedPackage.pricing.amount, selectedPackage.pricing.currency)}
                     </span>
                   </div>
                   <div className="border-t border-white/10 pt-4 text-base">
                     <div className="flex items-center justify-between">
                       <span className="text-white">Total</span>
                       <span className="text-3xl font-semibold text-white">
-                        ${selectedPackage.pricing.amount}
+                        {formatPrice(selectedPackage.pricing.amount, selectedPackage.pricing.currency)}
                       </span>
                     </div>
                   </div>
@@ -304,7 +310,7 @@ export default function ShopPage() {
               Not sure which package is yours? We'll build it with you.
             </h2>
             <p className="text-white/75">
-              Book a consultation and we’ll align diagnostics, therapies, and rituals to your goals before you ever swipe a card.
+              Book a consultation first. We will tell you which package fits, or that none of them does.
             </p>
             <Link to="/booking" className="inline-flex">
               <Button className="rounded-full bg-lime-glow px-8 py-6 text-charcoal hover:bg-lime-glow/90">

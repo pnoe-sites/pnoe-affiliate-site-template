@@ -28,9 +28,22 @@ const bookingSchema = z.object({
 
 type BookingForm = z.infer<typeof bookingSchema>
 
+const DEFAULT_TIME_SLOTS = [
+  { value: 'morning', label: 'Morning' },
+  { value: 'afternoon', label: 'Afternoon' },
+  { value: 'evening', label: 'Evening' },
+]
+
 export default function BookingPage() {
   const [submitted, setSubmitted] = useState(false)
   const { config } = useConfig()
+  const booking = config?.booking
+  // Neutral where the clinic said nothing. The old defaults were promises: a
+  // 24-hour reply, a 45-60 minute appointment, opening hours to 8pm.
+  const consultDuration = booking?.duration ?? 'Ask when you book'
+  const consultFormat = booking?.format ?? 'In person or online'
+  const confirmationNote = booking?.confirmationNote ?? 'We have your request and will be in touch to confirm a time.'
+  const timeSlots = booking?.timeSlots?.length ? booking.timeSlots : DEFAULT_TIME_SLOTS
 
   const {
     register,
@@ -64,7 +77,7 @@ export default function BookingPage() {
             </div>
             <CardTitle className="text-3xl text-white">Consultation requested</CardTitle>
             <CardDescription className="text-white/70">
-              We received your submission and will confirm times within 24 hours.
+              {confirmationNote}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -93,16 +106,16 @@ export default function BookingPage() {
   return (
     <div className="bg-charcoal text-white">
       {/* Hero Section */}
-      <section className="bg-[radial-gradient(circle_at_top,_#1c372b,_#050c09)] py-24 lg:py-28">
+      <section className="bg-[radial-gradient(circle_at_top,rgb(var(--brand-surface-dark)),rgb(var(--brand-surface-deep)))] py-24 lg:py-28">
         <div className="container">
           <div className="grid items-center gap-16 lg:grid-cols-[minmax(0,1fr)_0.9fr]">
             <div className="space-y-6">
               <p className="text-xs uppercase tracking-[0.4em] text-white/60">Schedule</p>
               <h1 className="text-[clamp(2.5rem,4vw,3.75rem)] font-semibold leading-tight">
-                Book a cinematic consultation that aligns diagnostics with ritual.
+                Book a consultation
               </h1>
               <p className="text-body-lg text-white/80 max-w-content">
-                Share a few details and our concierge team will script the first chapter of your longevity plan.
+                Tell us what you need and we will come back to you with times.
               </p>
             </div>
             <div className="rounded-[32px] border border-white/10 bg-white/5 p-2 shadow-[0_35px_120px_rgba(0,0,0,0.45)]">
@@ -138,14 +151,14 @@ export default function BookingPage() {
                   <Clock className="mt-0.5 h-5 w-5 text-lime-glow" />
                   <div>
                     <p className="font-semibold text-white">Duration</p>
-                    <p>45–60 minutes</p>
+                    <p>{consultDuration}</p>
                   </div>
                 </div>
                 <div className="flex gap-3">
                   <Calendar className="mt-0.5 h-5 w-5 text-lime-glow" />
                   <div>
                     <p className="font-semibold text-white">Format</p>
-                    <p>In-studio or virtual</p>
+                    <p>{consultFormat}</p>
                   </div>
                 </div>
               </CardContent>
@@ -182,10 +195,10 @@ export default function BookingPage() {
                 During the consult
               </h3>
               <ul className="mt-4 space-y-2 text-sm">
-                <li>• Align on goals + health history</li>
-                <li>• Review testing + therapy options</li>
-                <li>• Map first 30 days of your ritual</li>
-                <li>• Outline investment + cadence</li>
+                <li>• Go through your goals and health history</li>
+                <li>• Look at which tests and treatments apply</li>
+                <li>• Agree the first steps and when to review them</li>
+                <li>• Set out the cost and how often you would come in</li>
               </ul>
             </div>
           </div>
@@ -196,7 +209,7 @@ export default function BookingPage() {
               <CardHeader className="space-y-3">
                 <CardTitle className="text-3xl text-white">Request a consultation</CardTitle>
                 <CardDescription className="text-white/70">
-                  Complete the form and our concierge will confirm timing plus next steps.
+                  Fill this in and we will confirm a time and what to bring.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -282,9 +295,11 @@ export default function BookingPage() {
                         className={`${baseFieldClass(!!errors.preferredTime)} h-11 appearance-none`}
                       >
                         <option value="">Select time...</option>
-                        <option value="morning">Morning (9am-12pm)</option>
-                        <option value="afternoon">Afternoon (12pm-5pm)</option>
-                        <option value="evening">Evening (5pm-8pm)</option>
+                        {timeSlots.map((slot) => (
+                          <option key={slot.value} value={slot.value}>
+                            {slot.label}
+                          </option>
+                        ))}
                       </select>
                       {errors.preferredTime && (
                         <p className="mt-2 text-sm text-red-400">{errors.preferredTime.message}</p>
@@ -298,7 +313,7 @@ export default function BookingPage() {
                     </Label>
                     <Input
                       id="serviceInterest"
-                      placeholder="e.g., VO₂ Max Testing, IV Therapy"
+                      placeholder="Which service, if you know"
                       {...register('serviceInterest')}
                       className={`${baseFieldClass()} h-11`}
                     />
@@ -342,7 +357,7 @@ export default function BookingPage() {
                   </Button>
 
                   <p className="text-center text-xs text-white/60">
-                    By submitting, you agree to be contacted by our concierge team regarding your consultation.
+                    By submitting, you agree that the clinic may contact you about this request.
                   </p>
                 </form>
               </CardContent>

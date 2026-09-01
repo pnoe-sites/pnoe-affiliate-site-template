@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { api, getImageUrl } from '@/lib/api'
+import { formatPrice } from '@/lib/money'
 import type { Service } from '@shared/schemas'
 import { useQuery } from '@tanstack/react-query'
 import { AlertCircle, Clock, DollarSign, Link as LinkIcon } from 'lucide-react'
@@ -40,7 +41,7 @@ export default function ServiceDetailPage() {
   return (
     <div className="bg-charcoal text-white">
       {/* Hero Section */}
-      <section className="bg-[radial-gradient(circle_at_top,_#132b21,_#050c09)] py-20">
+      <section className="bg-[radial-gradient(circle_at_top,rgb(var(--brand-surface-dark)),rgb(var(--brand-surface-deep)))] py-20">
         <div className="container space-y-6">
           <Link
             to="/offerings"
@@ -79,15 +80,17 @@ export default function ServiceDetailPage() {
                 </Card>
               )}
 
-              {service.pricing && service.pricing.display !== 'hidden' && (
+              {/* An amount is required, not just a display mode: a service priced
+                  'exact' with the amount left blank used to render "$undefined". */}
+              {service.pricing && service.pricing.display !== 'hidden' && service.pricing.amount != null && (
                 <Card className="rounded-2xl border border-white/10 bg-white/5 text-white">
                   <CardContent className="flex items-start gap-3 p-5">
                     <DollarSign className="h-5 w-5 text-lime-glow" />
                     <div>
                       <p className="text-sm font-semibold">Pricing</p>
                       <p className="text-sm text-white/70">
-                        {service.pricing.display === 'from' ? 'From ' : ''}${service.pricing.amount}{' '}
-                        {service.pricing.currency}
+                        {service.pricing.display === 'from' ? 'From ' : ''}
+                        {formatPrice(service.pricing.amount, service.pricing.currency)}
                       </p>
                     </div>
                   </CardContent>

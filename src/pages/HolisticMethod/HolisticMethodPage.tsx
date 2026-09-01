@@ -10,16 +10,17 @@ export default function HolisticMethodPage() {
   return (
     <div className="bg-charcoal text-white">
       {/* Hero Section */}
-      <section className="bg-[radial-gradient(circle_at_top,_#1c372b,_#050c09)] py-24 lg:py-28">
+      <section className="bg-[radial-gradient(circle_at_top,rgb(var(--brand-surface-dark)),rgb(var(--brand-surface-deep)))] py-24 lg:py-28">
         <div className="container">
           <div className="grid items-center gap-16 lg:grid-cols-[minmax(0,1fr)_0.9fr]">
             <div className="space-y-6">
-              <p className="text-xs uppercase tracking-[0.4em] text-white/60">PNOĒ Method</p>
+              <p className="text-xs uppercase tracking-[0.4em] text-white/60">{config?.methodName ?? 'How we work'}</p>
               <h1 className="text-[clamp(2.75rem,4vw,3.75rem)] font-semibold leading-[1.1]">
-                Our holistic operating system for modern longevity.
+                How we work
               </h1>
               <p className="text-body-lg text-white/80 max-w-content">
-                Four cinematic pillars—Measure, Optimize, Enhance, Sustain— choreograph diagnostics, therapy, and rituals into one adaptive script.
+                Four steps: measure, optimise, enhance, sustain. Each one uses what the
+                one before it found.
               </p>
             </div>
             <div className="relative">
@@ -51,7 +52,7 @@ export default function HolisticMethodPage() {
       <section className="border-y border-white/5 py-24">
         <div className="container">
           <p className="mx-auto max-w-3xl text-center text-body-lg text-white/75">
-            Data without narrative is noise. We translate diagnostics into rituals, giving every client a cinematic storyline that scales from first test to ongoing optimization.
+            Numbers on their own do not tell you what to do. We turn results into a plan you can follow, and revisit it when the next set of results comes in.
           </p>
         </div>
       </section>
@@ -59,7 +60,7 @@ export default function HolisticMethodPage() {
       {/* Four Pillars */}
       <section className="bg-gradient-to-b from-pine-green via-deep-forest to-charcoal py-24">
         <div className="container">
-          <h2 className="text-center text-[clamp(2rem,3vw,3rem)] font-semibold text-white">The Four Pillars</h2>
+          <h2 className="text-center text-[clamp(2rem,3vw,3rem)] font-semibold text-white">The four steps</h2>
           <div className="mx-auto mt-16 max-w-4xl">
             <Accordion type="single" collapsible className="space-y-4">
               {[
@@ -94,7 +95,7 @@ export default function HolisticMethodPage() {
                   icon: '',
                   title: '3. Enhance',
                   subtitle: 'Amplify performance and recovery',
-                  body: 'Once foundation health is established, we stack advanced therapies to accelerate recovery and performance.',
+                  body: 'Once the basics are in order, we add therapies aimed at recovery and performance.',
                   bullets: [
                     'Red-light therapy for mitochondrial energy',
                     'Cryotherapy for inflammation control',
@@ -157,19 +158,19 @@ export default function HolisticMethodPage() {
             {[
               {
                 label: 'Personalization',
-                copy: 'Every intervention is anchored to data pulled directly from your physiology—never guesswork.',
+                copy: 'Every decision comes from your own results rather than from an average.',
               },
               {
                 label: 'Integration',
-                copy: 'Each pillar loops into the next, creating momentum instead of disconnected protocols.',
+                copy: 'Each step feeds the next, so you are not collecting unrelated treatments.',
               },
               {
                 label: 'Evidence-Based',
-                copy: 'Therapies and rituals are grounded in clinical research and outcomes we can measure.',
+                copy: 'Every therapy we offer is one we can point to research for, and measure the result of.',
               },
               {
                 label: 'Sustainable',
-                copy: 'We prioritize ritual design you can maintain, supported by coaching and retesting.',
+                copy: 'A plan you can keep up with beats a better plan you cannot. Coaching and retesting are part of it.',
               },
             ].map((item) => (
               <div key={item.label} className="rounded-2xl border border-white/10 bg-white/5 p-6">
@@ -184,12 +185,12 @@ export default function HolisticMethodPage() {
       {/* CTA */}
       <section className="bg-gradient-to-r from-lime-glow/20 via-lime-glow/10 to-transparent py-24 text-white">
         <div className="container text-center space-y-8">
-          <p className="text-xs uppercase tracking-[0.4em] text-white/60">Begin the ritual</p>
+          <p className="text-xs uppercase tracking-[0.4em] text-white/60">Getting started</p>
           <h2 className="text-[clamp(2rem,3.5vw,3rem)] font-semibold">
-            Ready to design your personalized longevity operating system?
+            Ready to start?
           </h2>
           <p className="mx-auto max-w-2xl text-body-lg text-white/75">
-            Schedule a consultation and we’ll architect your protocol—from diagnostics through sustainment.
+            Book a consultation and we will map out the first three months with you.
           </p>
           <Link to="/booking" className="inline-block">
             <Button

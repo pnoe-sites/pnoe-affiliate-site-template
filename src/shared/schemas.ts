@@ -11,6 +11,13 @@ export const BrandConfigSchema = z.object({
   heroImage: z.string().optional(),
   missionHeadline: z.string().optional(),
   missionBody: z.string().optional(),
+  // What this clinic calls its way of working. Used as the nav label and the
+  // eyebrow on that page, both of which used to read "Holistic Method".
+  methodName: z.string().optional(),
+  // A network or group this clinic belongs to, shown above its name in the
+  // footer. Absent shows nothing, which is the only safe default: it is a
+  // claim about affiliation.
+  networkName: z.string().optional(),
   holisticHeadline: z.string().optional(),
   holisticBody: z.string().optional(),
   
@@ -61,6 +68,32 @@ export const BrandConfigSchema = z.object({
     title: z.string(),
     description: z.string(),
   })).optional(),
+  // Stated next to the packages: turnaround, what is included, how often you
+  // would come in. The template used to hardcode three of these, so every
+  // clinic promised a 72-hour onboarding and weekly contact whether or not it
+  // offered either. Absent means the row is not shown.
+  // The clinic's values, shown on About. Three reads best.
+  values: z.array(z.object({
+    icon: z.string(),
+    title: z.string(),
+    copy: z.string(),
+  })).optional(),
+  packageFacts: z.array(z.object({
+    label: z.string(),
+    value: z.string(),
+  })).optional(),
+  // What the clinic says about its own consultation. These were hard-coded, so
+  // every affiliate site promised a reply within 24 hours, a 45-60 minute
+  // appointment and evening slots to 8pm regardless of how the clinic runs.
+  booking: z.object({
+    duration: z.string().optional(),
+    format: z.string().optional(),
+    confirmationNote: z.string().optional(),
+    timeSlots: z.array(z.object({
+      value: z.string(),
+      label: z.string(),
+    })).optional(),
+  }).optional(),
 })
 
 export type BrandConfig = z.infer<typeof BrandConfigSchema>

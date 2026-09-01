@@ -1,4 +1,5 @@
 import type { Package } from '@shared/schemas'
+import { formatPrice, billingLabel } from '@/lib/money'
 import { Check } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card'
@@ -32,9 +33,9 @@ export function PackageCard({ package: pkg, onSelect }: PackageCardProps) {
         </div>
         <div className="flex items-end gap-3">
           <div>
-            <span className="text-5xl font-semibold tracking-tight">${pkg.pricing.amount}</span>
+            <span className="text-5xl font-semibold tracking-tight">{formatPrice(pkg.pricing.amount, pkg.pricing.currency)}</span>
             {pkg.pricing.billingPeriod && (
-              <span className="ml-2 text-sm text-white/60">/ {pkg.pricing.billingPeriod}</span>
+              <span className="ml-2 text-sm text-white/60">{billingLabel(pkg.pricing.billingPeriod)}</span>
             )}
           </div>
         </div>

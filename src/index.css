@@ -4,7 +4,40 @@
 
 @layer base {
   :root {
-    /* PNOĒ Wellness Color Palette */
+    /*
+     * The clinic palette, and the DEFAULTS for it. ConfigProvider overwrites
+     * --brand-primary / --brand-secondary / --brand-accent at runtime from
+     * config.colors; everything here is what a site that sets none of them
+     * gets, which is the template's original look.
+     *
+     * The two derived shades exist because the dark sections are tints of the
+     * primary, not colours of their own. ConfigProvider derives them from
+     * whatever primary the clinic set, so a clinic that picks one colour gets a
+     * coherent site instead of its own colour next to somebody else's dark
+     * green. The values below are the exact originals, so an unset site is
+     * pixel-identical to what it was.
+     *
+     * Space-separated RGB channels, not hexes: Tailwind needs them in that
+     * form to compose `/70` opacity modifiers. See tailwind.config.ts.
+     */
+    --brand-primary: 36 76 63; /* #244C3F */
+    --brand-secondary: 30 58 86; /* #1E3A56 */
+    --brand-accent: 233 244 239; /* #E9F4EF */
+    --brand-primary-deep: 15 36 27; /* #0F241B */
+    --brand-primary-soft: 24 51 39; /* #183327 */
+
+    /*
+     * The three large surfaces: the dark hero gradients, the near-black they
+     * fade into, and the pale band behind the mission section. They were four
+     * slightly different hand-written greens and one pale mint, hard-coded as
+     * arbitrary Tailwind values, which is why a clinic could set its colours
+     * and still get a green site: these are most of what a visitor sees.
+     */
+    --brand-surface-dark: 22 47 39; /* primary at 0.62 */
+    --brand-surface-deep: 5 11 9; /* primary at 0.14 */
+    --brand-surface-tint: 222 232 228; /* primary mixed 85% into white */
+
+    /* shadcn/ui tokens */
     --background: 0 0% 100%; /* White */
     --foreground: 0 0% 10%; /* Off Black #1A1A1A */
     --card: 0 0% 100%; /* White */

@@ -1,20 +1,37 @@
+import type { Package } from '@shared/schemas'
+import { useQuery } from '@tanstack/react-query'
 import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useConfig } from '../../config/ConfigProvider'
+import { api } from '../../lib/api'
+import { clinicName } from '../../lib/brand'
 import { Button } from '../ui/button'
-
-const navItems = [
-  { to: '/', label: 'Home' },
-  { to: '/offerings', label: 'Offerings' },
-  { to: '/holistic-method', label: 'Holistic Method' },
-  { to: '/about', label: 'About' },
-  { to: '/shop', label: 'Shop' },
-]
 
 export default function Header() {
   const { config, isLoading } = useConfig()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  // Shared cache key with ShopPage, so this costs nothing on a warm app.
+  const { data: packages } = useQuery<Package[]>({
+    queryKey: ['packages'],
+    queryFn: () => api.packages.getAll(),
+  })
+
+  // Built per clinic rather than fixed.
+  //
+  // Two of the five were wrong for somebody. "Holistic Method" named a
+  // philosophy in the template author's words, on the site of a clinic that may
+  // describe what it does completely differently. And Shop was always there,
+  // so a clinic with no packages had a tab leading to an empty page: a broken
+  // promise in the most visible part of the site.
+  const navItems = [
+    { to: '/', label: 'Home' },
+    { to: '/offerings', label: 'Offerings' },
+    { to: '/holistic-method', label: config?.methodName ?? 'How we work' },
+    { to: '/about', label: 'About' },
+    ...(packages && packages.length > 0 ? [{ to: '/shop', label: 'Packages' }] : []),
+  ]
 
   if (isLoading) {
     return (
@@ -30,7 +47,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-charcoal/80 text-white backdrop-blur-xl">
       <div className="container flex h-20 items-center gap-4">
         <Link to="/" className="text-lg font-semibold tracking-[0.2em] uppercase text-white/80">
-          {config?.name || 'PNOĒ Clinic'}
+          {clinicName(config)}
         </Link>
         <nav className="ml-auto hidden flex-1 items-center justify-end gap-6 text-sm font-medium text-white/60 lg:flex">
           {navItems.map((item) => (

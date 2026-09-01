@@ -58,7 +58,7 @@ export default function OfferingsPage() {
   return (
     <div className="bg-charcoal text-white">
       {/* Hero Section */}
-      <section className="bg-[radial-gradient(circle_at_top,_#1c372b,_#050c09)] py-24 lg:py-28 text-white">
+      <section className="bg-[radial-gradient(circle_at_top,rgb(var(--brand-surface-dark)),rgb(var(--brand-surface-deep)))] py-24 lg:py-28 text-white">
         <div className="container">
           <div className="grid items-center gap-16 lg:grid-cols-[minmax(0,1fr)_0.9fr]">
             <div className="space-y-6">
@@ -66,16 +66,16 @@ export default function OfferingsPage() {
                 Clinical Catalog
               </p>
               <h1 className="text-[clamp(2.5rem,4vw,3.5rem)] font-semibold leading-[1.1]">
-                Every service lives inside a cinematic protocol.
+                Everything we offer, in one place.
               </h1>
               <p className="max-w-content text-body-lg text-white/75">
-                Technology therapies, biometric testing, IV rituals, and coaching sequences—
-                all choreographed to deliver clarity, autonomy, and measurable change.
+                Technology therapies, testing, IV treatments and coaching. Open any one
+                to see what it involves and what it costs.
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 <Link to="/booking">
                   <Button size="lg" className="rounded-full bg-lime-glow px-8 text-charcoal hover:bg-lime-glow/90">
-                    Build my stack
+                    Book a consultation
                   </Button>
                 </Link>
                 <Link to="/shop" className="inline-flex items-center text-sm font-semibold text-white/80 hover:text-white">
@@ -116,7 +116,7 @@ export default function OfferingsPage() {
               <div className="max-w-2xl space-y-4">
                 <p className="text-xs uppercase tracking-[0.4em] text-white/60">{categoryNames[category] || category}</p>
                 <h2 className="text-3xl font-semibold leading-tight">
-                  {categoryDescriptions[category] || 'Curated services for modern longevity'}
+                  {categoryDescriptions[category] || 'Our services'}
                 </h2>
               </div>
               <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -133,12 +133,12 @@ export default function OfferingsPage() {
       <section className="bg-gradient-to-br from-pine-green to-deep-forest py-24 text-white">
         <div className="container grid items-center gap-12 lg:grid-cols-2">
           <div className="space-y-6">
-            <p className="text-xs uppercase tracking-[0.4em] text-white/60">Concierge access</p>
+            <p className="text-xs uppercase tracking-[0.4em] text-white/60">Not sure where to start?</p>
             <h2 className="text-[clamp(2rem,3vw,2.8rem)] font-semibold">
-              Not sure where to enter? We'll script your first ritual.
+              We will help you choose.
             </h2>
             <p className="text-body-lg text-white/80 max-w-content">
-              Book a cinematic consult that maps diagnostics, therapies, and lifestyle layers into a single living operating system.
+              Book a consultation and we will work out which tests and treatments make sense for you, and which do not.
             </p>
             <Link to="/booking" className="inline-block">
               <Button

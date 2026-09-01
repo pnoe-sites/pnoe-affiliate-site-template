@@ -2,6 +2,7 @@ import type { BrandConfig } from '@shared/schemas'
 import { useQuery } from '@tanstack/react-query'
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 import { api } from '../lib/api'
+import { brandVariables } from '../lib/palette'
 
 interface ConfigContextValue {
   config: BrandConfig | null
@@ -21,14 +22,19 @@ export function ConfigProvider({ children }: { children: ReactNode }) {
   
   useEffect(() => {
     if (config && !appliedColors) {
-      // Apply theme colors to CSS variables
-      document.documentElement.style.setProperty('--brand-primary', config.colors.primary)
-      document.documentElement.style.setProperty('--brand-secondary', config.colors.secondary)
-      document.documentElement.style.setProperty('--brand-accent', config.colors.accent)
+      // The palette the clinic chose, in the form the stylesheet reads. This
+      // used to set the three hexes straight onto variables that nothing
+      // consumed, so the colour fields the data contract marks required had no
+      // effect on any published site.
+      for (const [name, value] of Object.entries(brandVariables(config.colors))) {
+        document.documentElement.style.setProperty(name, value)
+      }
       
       // Update document title
       if (config.name) {
-        document.title = `${config.name} - ${config.tagline || 'Clinical Testing for Longevity'}`
+        // No invented tagline: a clinic that gave none gets its name alone
+        // rather than the template author's line about itself.
+        document.title = config.tagline ? `${config.name} - ${config.tagline}` : config.name
       }
       
       setAppliedColors(true)

@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { useConfig } from '@/config/ConfigProvider'
 import { defaultMissionValues } from '@/constants/missionValues'
+import { brandLabel } from '@/lib/brand'
 import { api, getImageUrl } from '@/lib/api'
 import type { TeamMember } from '@shared/schemas'
 import { useQuery } from '@tanstack/react-query'
@@ -32,6 +33,12 @@ const getMissionIcon = (key?: string): LucideIcon => {
   return missionIconMap[key.toLowerCase()] || Activity
 }
 
+const DEFAULT_VALUES = [
+  { icon: '💬', title: 'We explain', copy: 'You should leave understanding your results, not holding a printout of them.' },
+  { icon: '👥', title: 'We stay with it', copy: 'The same team follows your care, so you are not repeating yourself.' },
+  { icon: '📋', title: 'We write it down', copy: 'Every visit ends with the next step agreed and recorded.' },
+]
+
 export default function AboutPage() {
   const { config } = useConfig()
   
@@ -42,26 +49,30 @@ export default function AboutPage() {
 
   const team = teamData || []
   const missionValues = config?.missionValues ?? []
-  const missionTitle = 'The PNOĒ Advantage'
+  // The clinic's values, or a default that claims nothing on its behalf. The
+  // three that shipped asserted peer-reviewed backing for every recommendation
+  // and progress tracked against objective data, on the site of any clinic that
+  // left this alone.
+  const values = config?.values?.length ? config.values : DEFAULT_VALUES
+  const missionTitle = brandLabel(config, 'The {clinic} Advantage', 'Our advantage')
   const missionEyebrow = 'Why choose us?'
   const missionYear = ''
   const missionHeadline = config?.missionHeadline ?? 'We create clarity, autonomy, and velocity for every wellness decision.'
-  const missionBody = config?.missionBody ?? 'Diagnostics, coaching, and protocols live in one ritual so you never have to guess what comes next.'
-  const holisticHeadline = config?.holisticHeadline ?? 'A cinematic blueprint that stacks diagnostics, therapy, and rituals.'
-  const holisticBody = config?.holisticBody ?? 'Think of it as an editorial layout for your body—a bold top block of testing, a supporting narrative of care, and a full-bleed image of how you want to feel.'
+  const missionBody = config?.missionBody ?? 'Testing, treatment and follow-up are handled in one place, so nothing falls between appointments.'
+  const holisticHeadline = config?.holisticHeadline ?? 'Measure first, then treat, then check it worked.'
+  const holisticBody = config?.holisticBody ?? 'Each step depends on the one before it. That is why we start with what your results actually say rather than with a treatment.'
 
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-[radial-gradient(circle_at_top,#14271f,#050c09)] py-24 text-white">
+      <section className="bg-[radial-gradient(circle_at_top,rgb(var(--brand-surface-dark)),rgb(var(--brand-surface-deep)))] py-24 text-white">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6 max-w-content">
-              <p className="text-xs uppercase tracking-[0.35em] text-white/60">Inside PNOĒ</p>
+              <p className="text-xs uppercase tracking-[0.35em] text-white/60">{brandLabel(config, 'Inside {clinic}', 'Inside the clinic')}</p>
               <h1 className="text-hero-mobile md:text-h1 font-bold leading-[1.05]">About Us</h1>
               <p className="text-body-lg text-white/80 leading-relaxed">
-                A team of passionate healthcare professionals dedicated to helping 
-                you achieve optimal health and longevity through personalized, science-based care.
+                The people who will look after you, and how the clinic is run.
               </p>
             </div>
             <div className="rounded-[18px] aspect-video overflow-hidden shadow-[0_35px_120px_rgba(0,0,0,0.45)] group">
@@ -82,7 +93,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission Statement */}
-      <section className="bg-[#def3d6] py-24 text-forest-green">
+      <section className="bg-[rgb(var(--brand-surface-tint))] py-24 text-forest-green">
         <div className="container">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,0.55fr)_1fr] items-center">
             <div className="space-y-6 max-w-2xl">
@@ -130,13 +141,13 @@ export default function AboutPage() {
           <div className="container py-24">
             <div className="grid gap-8 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,0.3fr)] lg:items-start">
               <div className="space-y-6">
-                <p className="text-xs uppercase tracking-[0.35em] text-white/70">Holistic Method</p>
+                <p className="text-xs uppercase tracking-[0.35em] text-white/70">{config?.methodName ?? 'How we work'}</p>
                 <h2 className="text-[3rem] font-semibold leading-tight">{holisticHeadline}</h2>
                 <p className="text-lg text-white/85 leading-relaxed">{holisticBody}</p>
               </div>
               <div className="flex lg:justify-end">
                 <Link to="/offerings" className="text-sm font-semibold text-lime-200 inline-flex items-center gap-2">
-                  View Practice <ArrowUpRight className="h-4 w-4" />
+                  See our services <ArrowUpRight className="h-4 w-4" />
                 </Link>
               </div>
             </div>
@@ -162,23 +173,9 @@ export default function AboutPage() {
       {/* Values */}
       <section className="bg-charcoal py-24 text-white">
         <div className="container">
-          <h2 className="text-h2 font-semibold text-center mb-16">Our Values</h2>
+          <h2 className="text-h2 font-semibold text-center mb-16">Our values</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {[{
-              icon: '🔍',
-              title: 'Science-First',
-              copy: 'Every recommendation is backed by peer-reviewed research and measurable outcomes.',
-            },
-            {
-              icon: '👤',
-              title: 'Personalized Care',
-              copy: 'Your biology is unique. Your treatment plan should be too.',
-            },
-            {
-              icon: '🎯',
-              title: 'Results-Driven',
-              copy: 'We track progress with objective data and adjust based on what works.',
-            }].map((value) => (
+            {values.map((value) => (
               <div key={value.title} className="rounded-[18px] border border-white/10 bg-white/5 px-8 py-10 text-center shadow-[0_30px_90px_rgba(0,0,0,0.4)]">
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/10 mx-auto mb-4 text-3xl">
                   {value.icon}
@@ -195,7 +192,7 @@ export default function AboutPage() {
       <section className="container py-24">
         <h2 className="text-h2 font-semibold text-center mb-6 text-forest-green">Meet Our Team</h2>
         <p className="text-center text-body-lg text-off-white mb-16 max-w-2xl mx-auto">
-          Experienced professionals committed to your health journey
+          The people you will meet.
         </p>
         
         {isLoading ? (
@@ -247,14 +244,14 @@ export default function AboutPage() {
         <div className="container text-center">
           <h2 className="text-h2 font-semibold mb-6">Work with our team</h2>
           <p className="text-body-lg mb-10 max-w-2xl mx-auto opacity-90">
-            Schedule a consultation to meet our team and discuss how we can help you achieve your health goals.
+            Book a consultation and we will match you with the right person.
           </p>
           <Link to="/booking" className="inline-block">
             <Button
               size="lg"
               className="rounded-full bg-lime-glow px-8 py-5 text-charcoal shadow-[0_15px_40px_rgba(196,255,77,0.35)] transition-transform hover:-translate-y-0.5 hover:bg-lime-glow/90"
             >
-              Book Your Consultation
+              Book a consultation
             </Button>
           </Link>
         </div>

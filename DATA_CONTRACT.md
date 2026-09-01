@@ -32,15 +32,39 @@ content. Replace what you have, keep the rest, and the site stays coherent.
 | `heroImage` | no | Path under `public/`, e.g. `/images/defaults/Hero.jpg`. |
 | `missionHeadline`, `missionBody` | no | Home and About mission copy. |
 | `holisticHeadline`, `holisticBody` | no | Holistic Method section copy. |
-| `colors.primary`, `colors.secondary`, `colors.accent` | yes | Hex values (`#RRGGBB`). Applied as CSS variables at load. |
+| `colors.primary`, `colors.secondary`, `colors.accent` | yes | Hex values (`#RRGGBB`). See **Colours** below for what each one moves. |
 | `contact.email` | no | Must be a valid email when present. |
 | `contact.phone`, `contact.location` | no | Free text. |
 | `contact.socials` | no | Array of `{platform, url}`. Platforms the footer knows: instagram, facebook, linkedin, twitter, youtube. |
 | `images.mission`, `images.ourHolisticMethod`, `images.ourOfferings`, `images.scheduleConsultation`, `images.aboutUs` | no | Section imagery, paths under `public/`. |
+| `methodName` | no | What this clinic calls its way of working. Used as the nav label and the eyebrow on that page. Defaults to "How we work". |
+| `networkName` | no | A network or group the clinic belongs to, shown above its name in the footer. Nothing is shown when it is absent, because it is a claim about affiliation. |
+| `values` | no | Array of `{icon, title, copy}` shown on About. Three reads best. The default claims nothing on the clinic's behalf. |
+| `booking` | no | `{duration, format, confirmationNote, timeSlots}`. What the clinic tells someone booking: how long a consultation runs, in person or online, what happens after they submit, and which time slots to offer. Every one of these used to be fixed in the template, so each site promised a reply within 24 hours and evening slots to 8pm. |
+| `packageFacts` | no | Array of `{label, value}` stated beside the packages (turnaround, what is included, how often you come in). The row is not shown when empty. |
 | `heroMeta` | no | Array of `{label, value}` cards under the hero. Three reads best. |
 | `missionValues` | no | Array of `{title, description, icon}`. Icons: target, heart, activity, check, trophy, focus, support, sparkles, zap. |
 | `whoWeHelpPanels` | no | Array of `{id, title, description, tag, image}` audience panels. Five ship by default. |
 | `outcomes` | no | Array of `{label, title, description}` outcome rows. |
+
+### Colours
+
+`colors.primary` does most of the work. The site's dark hero gradients, the pale
+band behind the mission section, and every heading and body colour on a light
+background are all drawn from it, with the darker shades derived rather than
+asked for: set one colour and the whole site is coherently yours.
+
+`colors.secondary` is the supporting dark tone and `colors.accent` the pale tint
+behind quiet sections.
+
+Two things do **not** follow this table, on purpose. The action colour (buttons,
+link highlights, the Schedule Consult pill) is fixed by the template, because it
+has to stay legible on the dark sections whatever the clinic's brand is. So are
+the neutral greys and near-blacks. If a clinic needs those changed, it is a
+template change, not a data change.
+
+Give real hex values. An unreadable one is ignored and the template's own colour
+stands, which looks like the field did nothing.
 
 ## services (Service[])
 

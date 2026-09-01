@@ -1,3 +1,17 @@
+/**
+ * brand wires a palette token to a CSS variable holding SPACE-SEPARATED RGB
+ * CHANNELS ("36 76 63"), not a hex.
+ *
+ * The channels and the function form are both required by Tailwind 3. A token
+ * declared as a plain `var(--x)` string works until someone writes
+ * `text-forest-green/70`, at which point Tailwind cannot compose the alpha and
+ * silently emits the colour at full strength. This template leans on those
+ * modifiers everywhere, so a naive variable swap would have flattened every
+ * muted paragraph on the site while looking correct in a diff.
+ */
+const brand = (name) => ({ opacityValue }) =>
+  opacityValue === undefined ? `rgb(var(${name}))` : `rgb(var(${name}) / ${opacityValue})`
+
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ['class'],
@@ -15,16 +29,29 @@ export default {
     },
     extend: {
       colors: {
-        // PNOĒ Primary Palette
-        'pale-sage': '#E9F4EF',
+        // The clinic's own palette. These five follow config.colors from
+        // src/data/clinic.json through the CSS variables ConfigProvider sets,
+        // with the template's defaults declared in index.css so a site that
+        // never sets them looks exactly as it always did.
+        //
+        // They used to be literal hexes, which made the three required colour
+        // fields in the data contract dead: an affiliate filled them in, the
+        // validator accepted them, and every published site came out in the
+        // template author's green.
+        'forest-green': brand('--brand-primary'),
+        'deep-forest': brand('--brand-primary-deep'),
+        'pine-green': brand('--brand-primary-soft'),
+        'ocean-blue': brand('--brand-secondary'),
+        'pale-sage': brand('--brand-accent'),
+
+        // Fixed by the template, not by the clinic. lime-glow is the action
+        // colour every button and link highlight uses and it has to stay
+        // legible on the dark sections; the greys are neutral chrome. The data
+        // contract says so, so nobody fills in a cell expecting these to move.
         'pale-blue': '#EAF3F8',
-        'forest-green': '#244C3F',
-        'deep-forest': '#0F241B',
-        'pine-green': '#183327',
         'charcoal': '#0A0F0D',
         'graphite': '#111B16',
         'lime-glow': '#C4FF4D',
-        'ocean-blue': '#1E3A56',
         
         // PNOĒ Secondary Palette
         'warm-gray': '#F7F7F7',
