@@ -6,13 +6,13 @@
   "description": "Static affiliate site template. All content lives in src/data/clinic.json; the built site makes no network requests and answers every route with its own HTML.",
   "scripts": {
     "dev": "vite",
-    "build": "npm run validate:data && tsc && vite build && tsx scripts/postbuild.ts",
+    "build": "npm run validate:data && tsc && tsc --noEmit -p tsconfig.scripts.json && vite build && tsx scripts/postbuild.ts",
     "preview": "vite preview",
     "validate:data": "tsx scripts/validate-clinic.ts",
     "validate:release": "tsx scripts/validate-clinic.ts --release",
     "images": "node scripts/optimize-images.mjs",
     "lint": "node scripts/check-copy.mjs && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit && tsc --noEmit -p tsconfig.scripts.json"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

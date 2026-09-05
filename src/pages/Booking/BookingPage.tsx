@@ -19,9 +19,9 @@ const bookingSchema = z.object({
   email: z.string().email('Invalid email address'),
   phone: z.string().min(10, 'Phone number must be at least 10 digits'),
   preferredDate: z.string().min(1, 'Please select a preferred date'),
-  preferredTime: z.enum(['morning', 'afternoon', 'evening'], {
-    errorMap: () => ({ message: 'Please select a time preference' }),
-  }),
+  // Any of the slots the business configured (config.booking.timeSlots), not
+  // a fixed three: a business with its own slot values used to fail every submit.
+  preferredTime: z.string().min(1, 'Please select a time preference'),
   serviceInterest: z.string().optional(),
   message: z.string().min(10, 'Please provide at least 10 characters').optional(),
   hearAboutUs: z.string().optional(),

@@ -33,6 +33,9 @@ const data: ClinicData = ClinicDataSchema.parse(JSON.parse(readFileSync(path.joi
 const siteUrl = data.config.seo?.siteUrl?.replace(/\/+$/, '')
 const shell = readFileSync(indexPath, 'utf8')
 
+/** absolute makes a root-relative asset path public; an https URL is already public. */
+const absolute = (p: string): string => (/^https?:\/\//i.test(p) ? p : `${siteUrl}${p}`)
+
 /** escapeAttr keeps a name with a quote or an ampersand in it from breaking the tag. */
 const escapeAttr = (s: string) =>
   String(s)
@@ -54,8 +57,8 @@ function jsonLd(): string {
   if (config.contact.phone) block.telephone = config.contact.phone
   if (config.contact.email) block.email = config.contact.email
   if (config.contact.location) block.address = config.contact.location
-  if (config.logo && siteUrl) block.logo = `${siteUrl}${config.logo}`
-  if (config.heroImage && siteUrl) block.image = `${siteUrl}${config.heroImage}`
+  if (config.logo && siteUrl) block.logo = absolute(config.logo)
+  if (config.heroImage && siteUrl) block.image = absolute(config.heroImage)
   const sameAs = (config.contact.socials ?? []).map((s) => s.url).filter(Boolean)
   if (sameAs.length) block.sameAs = sameAs
   if (data.team.length) {
@@ -72,7 +75,7 @@ function headFor(route: { path: string; title: string; description: string }): s
     `<meta property="og:title" content="${escapeAttr(route.title)}" />`,
     `<meta property="og:description" content="${escapeAttr(route.description)}" />`,
     canonical ? `<meta property="og:url" content="${escapeAttr(canonical)}" />` : '',
-    data.config.heroImage && siteUrl ? `<meta property="og:image" content="${escapeAttr(siteUrl + data.config.heroImage)}" />` : '',
+    data.config.heroImage && siteUrl ? `<meta property="og:image" content="${escapeAttr(absolute(data.config.heroImage))}" />` : '',
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:title" content="${escapeAttr(route.title)}" />`,
     `<meta name="twitter:description" content="${escapeAttr(route.description)}" />`,

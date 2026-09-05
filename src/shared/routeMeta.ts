@@ -1,3 +1,4 @@
+import { copyFor } from '../constants/copy'
 import type { ClinicData } from './schemas'
 
 /**
@@ -28,17 +29,29 @@ export function clip(text: string, max: number): string {
   return (space > max / 2 ? cut.slice(0, space) : cut).replace(/[,;:]$/, '') + '…'
 }
 
+// A long business name would leave the page part two characters wide, so
+// past 30 characters the name drops off page titles (the home title keeps it).
+const MAX_NAME_IN_TITLE = 30
+
 function pageTitle(name: string, page: string): string {
   const full = `${page} | ${name}`
-  return full.length <= MAX_TITLE ? full : clip(page, MAX_TITLE - name.length - 3) + ` | ${name}`
+  if (full.length <= MAX_TITLE) return full
+  if (name.length > MAX_NAME_IN_TITLE) return clip(page, MAX_TITLE)
+  return clip(page, MAX_TITLE - name.length - 3) + ` | ${name}`
+}
+
+// "in Woburn, MA" reads; "in 10 Roessler Rd Suite D, Woburn, MA 01801" does not.
+function placePhrase(location: string | undefined): string {
+  if (!location || /\d/.test(location) || location.length > 40) return ''
+  return ` in ${location}`
 }
 
 export function routeMetaFor(data: ClinicData): RouteMeta[] {
   const { config, services, packages } = data
   const name = config.name.trim()
-  const copy = config.copy ?? {}
+  const copy = copyFor(config)
   const overrides = config.seo?.routes ?? {}
-  const where = config.contact.location ? ` in ${config.contact.location}` : ''
+  const where = placePhrase(config.contact.location)
 
   const homeTitle = config.tagline ? `${name} - ${config.tagline}` : name
   const entries: RouteMeta[] = [
@@ -49,7 +62,7 @@ export function routeMetaFor(data: ClinicData): RouteMeta[] {
     },
     {
       path: '/offerings',
-      title: pageTitle(name, copy.offeringsLabel ?? 'Offerings'),
+      title: pageTitle(name, copy.offeringsLabel),
       description: services.length
         ? `What ${name} offers${where}: ${services.map((s) => s.title).join(', ')}.`
         : `What ${name} offers${where}.`,
@@ -69,20 +82,20 @@ export function routeMetaFor(data: ClinicData): RouteMeta[] {
   }
   entries.push({
     path: '/about',
-    title: pageTitle(name, copy.aboutLabel ?? 'About'),
+    title: pageTitle(name, copy.aboutLabel),
     description: config.missionHeadline ?? config.hero.sub,
   })
   if (packages.length > 0) {
     entries.push({
       path: '/shop',
-      title: pageTitle(name, copy.packagesLabel ?? 'Packages'),
-      description: copy.packagesIntro ?? `${name} packages: ${packages.map((p) => p.name).join(', ')}.`,
+      title: pageTitle(name, copy.packagesLabel),
+      description: `${copy.packagesIntro} ${name} packages: ${packages.map((p) => p.name).join(', ')}.`,
     })
   }
   entries.push({
     path: '/booking',
-    title: pageTitle(name, copy.bookingHeadline ?? 'Book a consultation'),
-    description: `Book a consultation with ${name}${where}. ${copy.bookingIntro ?? 'Tell us what you need and we will come back to you with times.'}`,
+    title: pageTitle(name, copy.bookingHeadline),
+    description: `${copy.bookingHeadline} with ${name}${where}. ${copy.bookingIntro}`,
   })
 
   return entries.map((entry) => {

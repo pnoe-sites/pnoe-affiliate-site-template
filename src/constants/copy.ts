@@ -74,6 +74,13 @@ export const defaultCopy: Required<Copy> = {
 
 type CopyKey = keyof Copy
 
+// What the two name-carrying lines say for the one frame before the config
+// query resolves, so the page never reads "Inside Our".
+const NAMELESS: Partial<Record<CopyKey, string>> = {
+  missionTitle: 'Our advantage',
+  aboutEyebrow: 'About us',
+}
+
 /**
  * useCopy-free accessor: the configured line for `key`, else the default,
  * with `{business}` filled in. Pages call `copyFor(config)` once and read
@@ -87,7 +94,8 @@ export function copyFor(config: BrandConfig | null | undefined): Required<Copy> 
   }
   for (const key of Object.keys(merged) as CopyKey[]) {
     const value = merged[key]
-    if (typeof value === 'string') merged[key] = value.replace('{business}', name || 'Our')
+    if (typeof value !== 'string' || !value.includes('{business}')) continue
+    merged[key] = name ? value.replace('{business}', name) : (NAMELESS[key] ?? value.replace(/\s*\{business\}\s*/, ' ').trim())
   }
   return merged as Required<Copy>
 }

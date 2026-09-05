@@ -57,8 +57,13 @@ function visibleText(source) {
   const literal = /'((?:[^'\\\n]|\\.)*)'|"((?:[^"\\\n]|\\.)*)"|`((?:[^`\\]|\\.)*)`/g
   let m
   while ((m = literal.exec(source))) pieces.push({ text: m[1] ?? m[2] ?? m[3] ?? '', index: m.index })
-  const jsxText = />([^<>{}]*[A-Za-z][^<>{}]*)</g
-  while ((m = jsxText.exec(source))) pieces.push({ text: m[1], index: m.index + 1 })
+  // JSX text between tags, with any {expression} inside it blanked out so
+  // "IV therapy for {name}" is still read as prose.
+  const jsxText = />([^<>]*[A-Za-z][^<>]*)</g
+  while ((m = jsxText.exec(source))) {
+    const text = m[1].replace(/\{[^{}]*\}/g, ' ')
+    if (/[A-Za-z]/.test(text)) pieces.push({ text, index: m.index + 1 })
+  }
   return pieces
 }
 
@@ -66,8 +71,10 @@ const failures = []
 for (const file of walk(srcDir)) {
   const source = stripComments(readFileSync(file, 'utf8'))
   for (const piece of visibleText(source)) {
-    // Import paths and CSS class strings are not prose.
-    if (/^[@./]/.test(piece.text) || /^[\w\s:\-[\]()/.%#,]*$/.test(piece.text) && !/\s[a-z]+\s/.test(piece.text) && piece.text.split(' ').length > 6) continue
+    // Import paths are not prose. Class strings are scanned like everything
+    // else: no utility class carries one of the banned words, and a heuristic
+    // that skipped "class-looking" strings let title-case prose through.
+    if (/^[@./]/.test(piece.text)) continue
     for (const rule of BANNED) {
       if (rule.test(piece.text)) {
         const line = source.slice(0, piece.index).split('\n').length

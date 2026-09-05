@@ -160,16 +160,21 @@ for (const [field, url] of [
 // ---------------------------------------------------------------------------
 
 if (release) {
-  // Every string the seed ships. A site whose field still equals one of them
+  // Every sentence the seed ships. A site whose field still equals one of them
   // is showing the template's words as its own; the one exception is a stock
   // image path, which is a warning (stock stays where the business has no photo).
+  // Only strings of MIN_SEED_LEN or more count: a short value a real business
+  // may share with the seed ("New York, NY", "15-20 minutes", "Sleep Quality")
+  // is not evidence of copied copy, a full sentence is. Keys that hold codes
+  // or contact facts rather than prose are left out for the same reason.
+  const MIN_SEED_LEN = 24
   const seed = JSON.parse(readFileSync(path.join(root, 'scripts', 'template-defaults.json'), 'utf8'))
   const seedStrings = new Set<string>()
-  const SKIP_KEYS = new Set(['colors', 'primary', 'secondary', 'accent', 'icon', 'role', 'display', 'currency', 'id', 'label', 'platform', 'billingPeriod', 'tag', 'value', 'methodName'])
+  const SKIP_KEYS = new Set(['colors', 'primary', 'secondary', 'accent', 'icon', 'role', 'display', 'currency', 'id', 'platform', 'billingPeriod', 'tag', 'methodName', 'location', 'phone', 'duration', 'email'])
   const collect = (node: unknown, key?: string) => {
     if (key && SKIP_KEYS.has(key)) return
     if (typeof node === 'string') {
-      if (node.trim().length >= 12 && !node.startsWith('/images/')) seedStrings.add(node.trim())
+      if (node.trim().length >= MIN_SEED_LEN && !node.startsWith('/images/')) seedStrings.add(node.trim())
     } else if (Array.isArray(node)) {
       node.forEach((n) => collect(n, key))
     } else if (node && typeof node === 'object') {

@@ -12,6 +12,7 @@ import type { Package } from '@shared/schemas'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { Navigate } from 'react-router-dom'
 import { BookingLink } from '@/components/shared/BookingLink'
 import { z } from 'zod'
 
@@ -53,6 +54,12 @@ export default function ShopPage() {
   })
 
   const packages = packagesData || []
+
+  // No packages means no page: the nav never links here, so this is a direct
+  // hit on an old address, and an empty grid is not an answer to it.
+  if (!isLoading && packagesData && packagesData.length === 0) {
+    return <Navigate to="/" replace />
+  }
 
   const handleSelectPackage = (pkg: Package) => {
     setSelectedPackage(pkg)
