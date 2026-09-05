@@ -42,8 +42,11 @@ export default function BookingPage() {
   // 24-hour reply, a 45-60 minute appointment, opening hours to 8pm.
   const consultDuration = booking?.duration ?? 'Ask when you book'
   const consultFormat = booking?.format ?? 'In person or online'
-  const confirmationNote = booking?.confirmationNote ?? 'We have your request and will be in touch to confirm a time.'
+  const confirmationNote = booking?.confirmationNote ?? 'Send it and we will be in touch to confirm a time.'
   const timeSlots = booking?.timeSlots?.length ? booking.timeSlots : DEFAULT_TIME_SLOTS
+  const bookingUrl = booking?.url
+  const ctaLabel = booking?.ctaLabel?.trim() || 'Book online'
+  const contactEmail = config?.contact.email
 
   const {
     register,
@@ -54,10 +57,27 @@ export default function BookingPage() {
     resolver: zodResolver(bookingSchema),
   })
 
-  const onSubmit = async (data: BookingForm) => {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    console.log('Booking request:', data)
+  // The site has no server, so a request cannot be posted anywhere. This used
+  // to pretend it was: a 1.5 second wait, a console.log, a "requested" screen,
+  // and the clinic never heard a word. The request now travels as an email the
+  // visitor sends from their own mail app, addressed to the clinic's contact
+  // address. With a scheduler URL the form is not shown at all, and with no
+  // contact email either there is nothing to send to, so the page says to call.
+  const onSubmit = (data: BookingForm) => {
+    if (!contactEmail) return
+    const slot = timeSlots.find((s) => s.value === data.preferredTime)?.label ?? data.preferredTime
+    const subject = `Consultation request: ${data.firstName} ${data.lastName}`
+    const lines = [
+      `Name: ${data.firstName} ${data.lastName}`,
+      `Email: ${data.email}`,
+      `Phone: ${data.phone}`,
+      `Preferred date: ${data.preferredDate}`,
+      `Preferred time: ${slot}`,
+    ]
+    if (data.serviceInterest) lines.push(`Service: ${data.serviceInterest}`)
+    if (data.message) lines.push('', data.message)
+    if (data.hearAboutUs) lines.push('', `Heard about us: ${data.hearAboutUs}`)
+    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`
     setSubmitted(true)
     reset()
   }
@@ -75,14 +95,14 @@ export default function BookingPage() {
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-lime-glow/20 text-2xl text-lime-glow">
               ✓
             </div>
-            <CardTitle className="text-3xl text-white">Consultation requested</CardTitle>
+            <CardTitle className="text-3xl text-white">Your request is ready to send</CardTitle>
             <CardDescription className="text-white/70">
               {confirmationNote}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <p className="text-sm text-white/60">
-              Expect a calendar link and intake checklist shortly. Need to adjust details? Submit another request below.
+              Your mail app opened with the request addressed to {contactEmail}. If it did not, write to that address with the same details.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <Button
@@ -203,13 +223,42 @@ export default function BookingPage() {
             </div>
           </div>
 
-          {/* Booking Form */}
+          {/* Booking: the clinic's scheduler when it has one, otherwise a
+              request that leaves as an email, otherwise the phone. */}
           <div className="lg:col-span-2">
+            {bookingUrl ? (
+              <Card className="rounded-[32px] border border-white/10 bg-gradient-to-b from-deep-forest/80 via-pine-green/70 to-charcoal/95 text-white">
+                <CardHeader className="space-y-3">
+                  <CardTitle className="text-3xl text-white">Book online</CardTitle>
+                  <CardDescription className="text-white/70">
+                    Pick a time in the clinic's calendar. It opens in a new tab.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <a href={bookingUrl} target="_blank" rel="noopener noreferrer" className="inline-flex">
+                    <Button size="lg" className="rounded-full bg-lime-glow px-8 py-6 text-charcoal hover:bg-lime-glow/90">
+                      {ctaLabel}
+                    </Button>
+                  </a>
+                </CardContent>
+              </Card>
+            ) : !contactEmail ? (
+              <Card className="rounded-[32px] border border-white/10 bg-gradient-to-b from-deep-forest/80 via-pine-green/70 to-charcoal/95 text-white">
+                <CardHeader className="space-y-3">
+                  <CardTitle className="text-3xl text-white">Book by phone</CardTitle>
+                  <CardDescription className="text-white/70">
+                    {config?.contact.phone
+                      ? `Call ${config.contact.phone} and we will find a time.`
+                      : 'Get in touch and we will find a time.'}
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            ) : (
             <Card className="rounded-[32px] border border-white/10 bg-gradient-to-b from-deep-forest/80 via-pine-green/70 to-charcoal/95 text-white">
               <CardHeader className="space-y-3">
                 <CardTitle className="text-3xl text-white">Request a consultation</CardTitle>
                 <CardDescription className="text-white/70">
-                  Fill this in and we will confirm a time and what to bring.
+                  Fill this in. It opens as an email to the clinic from your mail app; send it and we will confirm a time.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -353,15 +402,16 @@ export default function BookingPage() {
                     className="w-full rounded-full bg-lime-glow py-6 text-charcoal hover:bg-lime-glow/90"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? 'Submitting…' : 'Request consultation'}
+                    {isSubmitting ? 'Opening your mail app…' : 'Request consultation'}
                   </Button>
 
                   <p className="text-center text-xs text-white/60">
-                    By submitting, you agree that the clinic may contact you about this request.
+                    By sending, you agree that the clinic may contact you about this request.
                   </p>
                 </form>
               </CardContent>
             </Card>
+            )}
           </div>
         </div>
       </section>

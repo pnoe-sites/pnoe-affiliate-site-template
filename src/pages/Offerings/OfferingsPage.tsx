@@ -4,6 +4,7 @@ import { useConfig } from '@/config/ConfigProvider'
 import { api, getImageUrl } from '@/lib/api'
 import type { Service } from '@shared/schemas'
 import { useQuery } from '@tanstack/react-query'
+import { BookingLink } from '@/components/shared/BookingLink'
 import { Link } from 'react-router-dom'
 
 export default function OfferingsPage() {
@@ -73,11 +74,11 @@ export default function OfferingsPage() {
                 to see what it involves and what it costs.
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
-                <Link to="/booking">
+                <BookingLink>
                   <Button size="lg" className="rounded-full bg-lime-glow px-8 text-charcoal hover:bg-lime-glow/90">
                     Book a consultation
                   </Button>
-                </Link>
+                </BookingLink>
                 <Link to="/shop" className="inline-flex items-center text-sm font-semibold text-white/80 hover:text-white">
                   Explore packages →
                 </Link>
@@ -140,14 +141,14 @@ export default function OfferingsPage() {
             <p className="text-body-lg text-white/80 max-w-content">
               Book a consultation and we will work out which tests and treatments make sense for you, and which do not.
             </p>
-            <Link to="/booking" className="inline-block">
+            <BookingLink className="inline-block">
               <Button
                 size="lg"
                 className="rounded-full bg-lime-glow px-8 py-5 text-charcoal shadow-[0_15px_40px_rgba(196,255,77,0.35)] transition-transform hover:-translate-y-0.5 hover:bg-lime-glow/90"
               >
                 Schedule consultation
               </Button>
-            </Link>
+            </BookingLink>
           </div>
           <div className="overflow-hidden rounded-[28px] border border-white/15">
             <div className="relative aspect-[4/3]">

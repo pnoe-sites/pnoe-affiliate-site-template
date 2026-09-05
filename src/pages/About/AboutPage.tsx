@@ -16,6 +16,7 @@ import {
   Trophy,
   type LucideIcon,
 } from 'lucide-react'
+import { BookingLink } from '@/components/shared/BookingLink'
 import { Link } from 'react-router-dom'
 
 const missionIconMap: Record<string, LucideIcon> = {
@@ -246,14 +247,14 @@ export default function AboutPage() {
           <p className="text-body-lg mb-10 max-w-2xl mx-auto opacity-90">
             Book a consultation and we will match you with the right person.
           </p>
-          <Link to="/booking" className="inline-block">
+          <BookingLink className="inline-block">
             <Button
               size="lg"
               className="rounded-full bg-lime-glow px-8 py-5 text-charcoal shadow-[0_15px_40px_rgba(196,255,77,0.35)] transition-transform hover:-translate-y-0.5 hover:bg-lime-glow/90"
             >
               Book a consultation
             </Button>
-          </Link>
+          </BookingLink>
         </div>
       </section>
     </div>

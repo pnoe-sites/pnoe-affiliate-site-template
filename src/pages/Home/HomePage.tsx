@@ -27,6 +27,7 @@ import {
   Zap,
   type LucideIcon
 } from 'lucide-react'
+import { BookingLink } from '@/components/shared/BookingLink'
 import { Link } from 'react-router-dom'
 const missionIconMap: Record<string, LucideIcon> = {
   target: Target,
@@ -100,11 +101,11 @@ export default function HomePage() {
               step with you. Then we check whether it worked.
             </p>
             <div className="flex flex-col sm:flex-row sm:items-center justify-center gap-4 pt-4">
-              <Link to="/booking">
+              <BookingLink>
                 <Button size="lg" className="bg-white text-deep-forest px-8 py-6">
                   Book a consultation
                 </Button>
-              </Link>
+              </BookingLink>
               <Link to="/offerings" className="text-sm font-semibold text-lime-glow inline-flex items-center gap-2">
                 See how we work <MoveRight className="h-4 w-4" />
               </Link>
@@ -394,11 +395,11 @@ export default function HomePage() {
             Tell us what you need and we will find a time.
           </p>
           <div className="flex gap-6 justify-center flex-wrap">
-            <Link to="/booking">
+            <BookingLink>
               <Button size="lg" className="bg-white text-forest-green hover:bg-white/90">
                 Book a consultation
               </Button>
-            </Link>
+            </BookingLink>
             <Link to="/offerings">
               <Button size="lg" variant="outline" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-forest-green">
                 See our services

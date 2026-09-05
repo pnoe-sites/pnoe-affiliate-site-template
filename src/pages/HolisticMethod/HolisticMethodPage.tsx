@@ -2,7 +2,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Button } from '@/components/ui/button'
 import { useConfig } from '@/config/ConfigProvider'
 import { getImageUrl } from '@/lib/api'
-import { Link } from 'react-router-dom'
+import { BookingLink } from '@/components/shared/BookingLink'
 
 export default function HolisticMethodPage() {
   const { config } = useConfig()
@@ -192,14 +192,14 @@ export default function HolisticMethodPage() {
           <p className="mx-auto max-w-2xl text-body-lg text-white/75">
             Book a consultation and we will map out the first three months with you.
           </p>
-          <Link to="/booking" className="inline-block">
+          <BookingLink className="inline-block">
             <Button
               size="lg"
               className="rounded-full bg-lime-glow px-10 py-6 text-charcoal shadow-[0_15px_40px_rgba(196,255,77,0.35)] transition-transform hover:-translate-y-0.5 hover:bg-lime-glow/90"
             >
               Schedule your consultation
             </Button>
-          </Link>
+          </BookingLink>
         </div>
       </section>
     </div>

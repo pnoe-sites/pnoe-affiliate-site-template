@@ -1,7 +1,7 @@
 {
   "name": "pnoe-affiliate-site-template",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "Static affiliate clinic website template. All content lives in src/data/clinic.json; the built site makes no network requests.",
   "scripts": {

@@ -14,6 +14,10 @@ and the project flattened to a single package so Plexon's site publisher can bui
 
 - `src/data/clinic.json` holds the clinic's profile, services, team, testimonials,
   and packages. The full schema is documented in [DATA_CONTRACT.md](DATA_CONTRACT.md).
+- Every Book button goes where `config.booking.url` says (the clinic's scheduler,
+  opened in a new tab). Without it the request page turns the form into an email to
+  `config.contact.email`; the site has no server, so nothing is ever "submitted" to
+  nowhere. Change the destination in the data, never in a page.
 - `npm run build` validates the data file, type-checks, builds to `dist/`, and writes
   `dist/404.html` so deep links survive a refresh on GitHub Pages.
 - The file ships with fictional "Evergreen Wellness Clinic" content, so the template

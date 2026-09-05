@@ -5,6 +5,7 @@ import { formatPrice } from '@/lib/money'
 import type { Service } from '@shared/schemas'
 import { useQuery } from '@tanstack/react-query'
 import { AlertCircle, Clock, DollarSign, Link as LinkIcon } from 'lucide-react'
+import { BookingLink } from '@/components/shared/BookingLink'
 import { Link, Navigate, useParams } from 'react-router-dom'
 
 export default function ServiceDetailPage() {
@@ -136,11 +137,11 @@ export default function ServiceDetailPage() {
             )}
 
             <div>
-              <Link to="/booking">
+              <BookingLink>
                 <Button className="rounded-full bg-lime-glow px-8 py-6 text-charcoal hover:bg-lime-glow/90">
                   Book this service
                 </Button>
-              </Link>
+              </BookingLink>
             </div>
           </div>
 

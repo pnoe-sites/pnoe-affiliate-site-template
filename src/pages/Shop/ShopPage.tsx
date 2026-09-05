@@ -12,7 +12,7 @@ import type { Package } from '@shared/schemas'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { BookingLink } from '@/components/shared/BookingLink'
 import { z } from 'zod'
 
 const checkoutSchema = z.object({
@@ -312,11 +312,11 @@ export default function ShopPage() {
             <p className="text-white/75">
               Book a consultation first. We will tell you which package fits, or that none of them does.
             </p>
-            <Link to="/booking" className="inline-flex">
+            <BookingLink className="inline-flex">
               <Button className="rounded-full bg-lime-glow px-8 py-6 text-charcoal hover:bg-lime-glow/90">
                 Schedule consultation
               </Button>
-            </Link>
+            </BookingLink>
           </div>
         </section>
       )}

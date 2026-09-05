@@ -2,6 +2,7 @@ import type { Package } from '@shared/schemas'
 import { useQuery } from '@tanstack/react-query'
 import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
+import { BookingLink, useBookingCtaLabel } from '@/components/shared/BookingLink'
 import { Link, NavLink } from 'react-router-dom'
 import { useConfig } from '../../config/ConfigProvider'
 import { api } from '../../lib/api'
@@ -11,6 +12,7 @@ import { Button } from '../ui/button'
 export default function Header() {
   const { config, isLoading } = useConfig()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const ctaLabel = useBookingCtaLabel('Schedule Consult')
 
   // Shared cache key with ShopPage, so this costs nothing on a warm app.
   const { data: packages } = useQuery<Package[]>({
@@ -63,11 +65,11 @@ export default function Header() {
           ))}
         </nav>
         <div className="hidden lg:block">
-          <Link to="/booking">
+          <BookingLink>
             <Button size="sm" className="rounded-full bg-lime-glow px-6 text-charcoal shadow-[0_10px_30px_rgba(196,255,77,0.35)] hover:bg-lime-glow/90">
-              Schedule Consult
+              {ctaLabel}
             </Button>
-          </Link>
+          </BookingLink>
         </div>
         <button
           type="button"
@@ -94,11 +96,11 @@ export default function Header() {
                 {item.label}
               </NavLink>
             ))}
-            <Link to="/booking" onClick={() => setIsMenuOpen(false)}>
+            <BookingLink onClick={() => setIsMenuOpen(false)}>
               <Button className="w-full rounded-full bg-lime-glow px-6 py-3 text-charcoal shadow-[0_15px_35px_rgba(196,255,77,0.35)] hover:bg-lime-glow/90">
-                Schedule Consult
+                {ctaLabel}
               </Button>
-            </Link>
+            </BookingLink>
           </nav>
         </div>
       )}

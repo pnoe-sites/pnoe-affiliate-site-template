@@ -86,6 +86,12 @@ export const BrandConfigSchema = z.object({
   // every affiliate site promised a reply within 24 hours, a 45-60 minute
   // appointment and evening slots to 8pm regardless of how the clinic runs.
   booking: z.object({
+    // url is the clinic's own scheduler. When set, every Book button on the
+    // site opens it and the request page hands over to it; without it the
+    // request page emails the request to contact.email, because the site has
+    // no server to post to. ctaLabel is the header button's text.
+    url: z.string().url().optional(),
+    ctaLabel: z.string().optional(),
     duration: z.string().optional(),
     format: z.string().optional(),
     confirmationNote: z.string().optional(),
