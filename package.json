@@ -1,15 +1,17 @@
 {
   "name": "pnoe-affiliate-site-template",
   "private": true,
-  "version": "1.1.0",
+  "version": "2.0.0",
   "type": "module",
-  "description": "Static affiliate clinic website template. All content lives in src/data/clinic.json; the built site makes no network requests.",
+  "description": "Static affiliate site template. All content lives in src/data/clinic.json; the built site makes no network requests and answers every route with its own HTML.",
   "scripts": {
     "dev": "vite",
-    "build": "npm run validate:data && tsc && vite build && node scripts/postbuild.mjs",
+    "build": "npm run validate:data && tsc && vite build && tsx scripts/postbuild.ts",
     "preview": "vite preview",
     "validate:data": "tsx scripts/validate-clinic.ts",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "validate:release": "tsx scripts/validate-clinic.ts --release",
+    "images": "node scripts/optimize-images.mjs",
+    "lint": "node scripts/check-copy.mjs && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
@@ -41,6 +43,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.12",
     "postcss": "^8.4.47",
+    "sharp": "^0.35.4",
     "tailwindcss": "^3.4.11",
     "tailwindcss-animate": "^1.0.7",
     "tsx": "^4.19.0",

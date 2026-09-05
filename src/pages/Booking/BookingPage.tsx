@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { useConfig } from '@/config/ConfigProvider'
+import { copyFor } from '@/constants/copy'
 import { getImageUrl } from '@/lib/api'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Calendar, Clock, Mail, Phone } from 'lucide-react'
@@ -37,8 +38,9 @@ const DEFAULT_TIME_SLOTS = [
 export default function BookingPage() {
   const [submitted, setSubmitted] = useState(false)
   const { config } = useConfig()
+  const copy = copyFor(config)
   const booking = config?.booking
-  // Neutral where the clinic said nothing. The old defaults were promises: a
+  // Neutral where the business said nothing. The old defaults were promises: a
   // 24-hour reply, a 45-60 minute appointment, opening hours to 8pm.
   const consultDuration = booking?.duration ?? 'Ask when you book'
   const consultFormat = booking?.format ?? 'In person or online'
@@ -59,8 +61,8 @@ export default function BookingPage() {
 
   // The site has no server, so a request cannot be posted anywhere. This used
   // to pretend it was: a 1.5 second wait, a console.log, a "requested" screen,
-  // and the clinic never heard a word. The request now travels as an email the
-  // visitor sends from their own mail app, addressed to the clinic's contact
+  // and the business never heard a word. The request now travels as an email the
+  // visitor sends from their own mail app, addressed to the business's contact
   // address. With a scheduler URL the form is not shown at all, and with no
   // contact email either there is nothing to send to, so the page says to call.
   const onSubmit = (data: BookingForm) => {
@@ -130,12 +132,12 @@ export default function BookingPage() {
         <div className="container">
           <div className="grid items-center gap-16 lg:grid-cols-[minmax(0,1fr)_0.9fr]">
             <div className="space-y-6">
-              <p className="text-xs uppercase tracking-[0.4em] text-white/60">Schedule</p>
+              <p className="text-xs uppercase tracking-[0.4em] text-white/60">{copy.bookingEyebrow}</p>
               <h1 className="text-[clamp(2.5rem,4vw,3.75rem)] font-semibold leading-tight">
-                Book a consultation
+                {copy.bookingHeadline}
               </h1>
               <p className="text-body-lg text-white/80 max-w-content">
-                Tell us what you need and we will come back to you with times.
+                {copy.bookingIntro}
               </p>
             </div>
             <div className="rounded-[32px] border border-white/10 bg-white/5 p-2 shadow-[0_35px_120px_rgba(0,0,0,0.45)]">
@@ -143,13 +145,11 @@ export default function BookingPage() {
                 {config?.images?.scheduleConsultation ? (
                   <img
                     src={getImageUrl(config.images.scheduleConsultation)}
-                    alt="Schedule a Consultation"
+                    alt={copy.bookingHeadline}
                     className="h-full w-full object-cover"
                   />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center bg-white/5 text-white/50">
-                    Schedule Consultation Image
-                  </div>
+                  <div className="h-full w-full bg-[radial-gradient(circle_at_top,rgb(var(--brand-surface-dark)),rgb(var(--brand-surface-deep)))]" />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-transparent to-transparent" />
               </div>
@@ -212,26 +212,25 @@ export default function BookingPage() {
 
             <div className="rounded-3xl border border-white/10 bg-white/5 p-6 text-white/80">
               <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-white/60">
-                During the consult
+                {copy.consultStepsTitle}
               </h3>
               <ul className="mt-4 space-y-2 text-sm">
-                <li>• Go through your goals and health history</li>
-                <li>• Look at which tests and treatments apply</li>
-                <li>• Agree the first steps and when to review them</li>
-                <li>• Set out the cost and how often you would come in</li>
+                {copy.consultSteps.map((step) => (
+                  <li key={step}>• {step}</li>
+                ))}
               </ul>
             </div>
           </div>
 
-          {/* Booking: the clinic's scheduler when it has one, otherwise a
+          {/* Booking: the business's scheduler when it has one, otherwise a
               request that leaves as an email, otherwise the phone. */}
           <div className="lg:col-span-2">
             {bookingUrl ? (
               <Card className="rounded-[32px] border border-white/10 bg-gradient-to-b from-deep-forest/80 via-pine-green/70 to-charcoal/95 text-white">
                 <CardHeader className="space-y-3">
-                  <CardTitle className="text-3xl text-white">Book online</CardTitle>
+                  <CardTitle className="text-3xl text-white">{copy.bookingOnlineTitle}</CardTitle>
                   <CardDescription className="text-white/70">
-                    Pick a time in the clinic's calendar. It opens in a new tab.
+                    {copy.bookingOnlineBody}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -256,9 +255,9 @@ export default function BookingPage() {
             ) : (
             <Card className="rounded-[32px] border border-white/10 bg-gradient-to-b from-deep-forest/80 via-pine-green/70 to-charcoal/95 text-white">
               <CardHeader className="space-y-3">
-                <CardTitle className="text-3xl text-white">Request a consultation</CardTitle>
+                <CardTitle className="text-3xl text-white">{copy.bookingRequestTitle}</CardTitle>
                 <CardDescription className="text-white/70">
-                  Fill this in. It opens as an email to the clinic from your mail app; send it and we will confirm a time.
+                  {copy.bookingRequestBody}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -406,7 +405,7 @@ export default function BookingPage() {
                   </Button>
 
                   <p className="text-center text-xs text-white/60">
-                    By sending, you agree that the clinic may contact you about this request.
+                    {copy.bookingConsent}
                   </p>
                 </form>
               </CardContent>

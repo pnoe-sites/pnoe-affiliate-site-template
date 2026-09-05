@@ -4,8 +4,8 @@ import Layout from './components/layout/Layout'
 import { ConfigProvider } from './config/ConfigProvider'
 import AboutPage from './pages/About/AboutPage'
 import BookingPage from './pages/Booking/BookingPage'
-import HolisticMethodPage from './pages/HolisticMethod/HolisticMethodPage'
 import HomePage from './pages/Home/HomePage'
+import MethodPage from './pages/Method/MethodPage'
 import OfferingsPage from './pages/Offerings/OfferingsPage'
 import ServiceDetailPage from './pages/ServiceDetail/ServiceDetailPage'
 import ShopPage from './pages/Shop/ShopPage'
@@ -30,11 +30,11 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="offerings" element={<OfferingsPage />} />
             <Route path="services/:slug" element={<ServiceDetailPage />} />
-            <Route path="holistic-method" element={<HolisticMethodPage />} />
+            <Route path="method" element={<MethodPage />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="shop" element={<ShopPage />} />
             <Route path="booking" element={<BookingPage />} />
-            <Route path="*" element={<div className="container py-12"><h1 className="text-2xl font-bold">Page Not Found</h1><p className="text-muted-foreground mt-2">The page you're looking for doesn't exist.</p></div>} />
+            <Route path="*" element={<div className="container py-12"><h1 className="text-2xl font-bold">Page not found</h1><p className="text-muted-foreground mt-2">There is nothing at this address.</p></div>} />
           </Route>
         </Routes>
       </BrowserRouter>

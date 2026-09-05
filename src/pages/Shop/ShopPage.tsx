@@ -4,9 +4,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useConfig } from '@/config/ConfigProvider'
+import { copyFor } from '@/constants/copy'
 import { api } from '@/lib/api'
 import { formatPrice } from '@/lib/money'
-import { brandLabel } from '@/lib/brand'
 import { zodResolver } from '@hookform/resolvers/zod'
 import type { Package } from '@shared/schemas'
 import { useQuery } from '@tanstack/react-query'
@@ -29,7 +29,8 @@ type CheckoutForm = z.infer<typeof checkoutSchema>
 
 export default function ShopPage() {
   const { config } = useConfig()
-  // Whatever the clinic wants stated next to its packages: turnaround, what is
+  const copy = copyFor(config)
+  // Whatever the business wants stated next to its packages: turnaround, what is
   // included, how often you would come in. Empty is a valid answer and the row
   // is dropped rather than filled with a promise nobody made.
   const packageFacts = config?.packageFacts ?? []
@@ -86,7 +87,7 @@ export default function ShopPage() {
           </CardHeader>
           <CardContent className="space-y-6">
             <p className="text-sm text-white/60">
-              Someone from the clinic will contact you using the details you gave us.
+              We will contact you using the details you gave us.
             </p>
             <Button
               className="rounded-full bg-lime-glow px-6 text-charcoal hover:bg-lime-glow/90"
@@ -110,12 +111,12 @@ export default function ShopPage() {
       <section className="bg-[radial-gradient(circle_at_top,rgb(var(--brand-surface-dark)),rgb(var(--brand-surface-deep)))] py-24">
         <div className="container space-y-12">
           <div className="space-y-6">
-            <p className="text-xs uppercase tracking-[0.4em] text-white/60">{brandLabel(config, '{clinic} Packages', 'Packages')}</p>
+            <p className="text-xs uppercase tracking-[0.4em] text-white/60">{copy.packagesLabel}</p>
             <h1 className="text-[clamp(2.5rem,4vw,3.8rem)] font-semibold leading-tight">
-              Packages that bundle what most people need, at one price.
+              {copy.packagesHeadline}
             </h1>
             <p className="max-w-3xl text-body-lg text-white/80">
-              Each one groups testing, treatment and follow-up so you are not choosing them one at a time.
+              {copy.packagesIntro}
             </p>
           </div>
           {packageFacts.length > 0 && (
@@ -305,16 +306,16 @@ export default function ShopPage() {
       {!showCheckout && (
         <section className="bg-gradient-to-r from-deep-forest via-charcoal to-pine-green py-24">
           <div className="container max-w-3xl text-center space-y-6">
-            <p className="text-xs uppercase tracking-[0.4em] text-white/50">Need guidance?</p>
+            <p className="text-xs uppercase tracking-[0.4em] text-white/50">{copy.packagesCtaEyebrow}</p>
             <h2 className="text-[clamp(2rem,3vw,2.8rem)] font-semibold">
-              Not sure which package is yours? We'll build it with you.
+              {copy.packagesCtaHeadline}
             </h2>
             <p className="text-white/75">
-              Book a consultation first. We will tell you which package fits, or that none of them does.
+              {copy.packagesCtaBody}
             </p>
             <BookingLink className="inline-flex">
               <Button className="rounded-full bg-lime-glow px-8 py-6 text-charcoal hover:bg-lime-glow/90">
-                Schedule consultation
+                {copy.bookLabel}
               </Button>
             </BookingLink>
           </div>

@@ -6,6 +6,9 @@ import clinic from '@/data/clinic.json'
 // shape before every build.
 const data = clinic as unknown as ClinicData
 
+/** The whole data file, for code that needs more than one section at once (route meta). */
+export const clinicData: ClinicData = data
+
 // Image paths in clinic.json are root-relative (e.g. /images/team/emily.jpg)
 // and served from public/. Absolute URLs pass through untouched.
 export function getImageUrl(path: string | undefined): string {

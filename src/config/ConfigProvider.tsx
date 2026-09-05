@@ -14,33 +14,26 @@ const ConfigContext = createContext<ConfigContextValue | null>(null)
 
 export function ConfigProvider({ children }: { children: ReactNode }) {
   const [appliedColors, setAppliedColors] = useState(false)
-  
+
   const { data: config, isLoading, error } = useQuery<BrandConfig>({
     queryKey: ['config'],
     queryFn: () => api.config.get(),
   })
-  
+
   useEffect(() => {
     if (config && !appliedColors) {
-      // The palette the clinic chose, in the form the stylesheet reads. This
+      // The palette the business chose, in the form the stylesheet reads. This
       // used to set the three hexes straight onto variables that nothing
       // consumed, so the colour fields the data contract marks required had no
       // effect on any published site.
       for (const [name, value] of Object.entries(brandVariables(config.colors))) {
         document.documentElement.style.setProperty(name, value)
       }
-      
-      // Update document title
-      if (config.name) {
-        // No invented tagline: a clinic that gave none gets its name alone
-        // rather than the template author's line about itself.
-        document.title = config.tagline ? `${config.name} - ${config.tagline}` : config.name
-      }
-      
+      // The document title is per route and set by Layout from routeMeta.
       setAppliedColors(true)
     }
   }, [config, appliedColors])
-  
+
   return (
     <ConfigContext.Provider value={{ config: config || null, isLoading, error: error as Error | null }}>
       {children}

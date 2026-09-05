@@ -3,16 +3,18 @@ import { useQuery } from '@tanstack/react-query'
 import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
 import { BookingLink, useBookingCtaLabel } from '@/components/shared/BookingLink'
+import { copyFor } from '@/constants/copy'
 import { Link, NavLink } from 'react-router-dom'
 import { useConfig } from '../../config/ConfigProvider'
 import { api } from '../../lib/api'
-import { clinicName } from '../../lib/brand'
+import { businessName } from '../../lib/brand'
 import { Button } from '../ui/button'
 
 export default function Header() {
   const { config, isLoading } = useConfig()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const ctaLabel = useBookingCtaLabel('Schedule Consult')
+  const copy = copyFor(config)
 
   // Shared cache key with ShopPage, so this costs nothing on a warm app.
   const { data: packages } = useQuery<Package[]>({
@@ -20,19 +22,19 @@ export default function Header() {
     queryFn: () => api.packages.getAll(),
   })
 
-  // Built per clinic rather than fixed.
+  // Built per business rather than fixed.
   //
-  // Two of the five were wrong for somebody. "Holistic Method" named a
-  // philosophy in the template author's words, on the site of a clinic that may
-  // describe what it does completely differently. And Shop was always there,
-  // so a clinic with no packages had a tab leading to an empty page: a broken
-  // promise in the most visible part of the site.
+  // Every label is the business's own or a neutral default, and a tab exists
+  // only when its page has content: the method page appears only when
+  // config.method is written, Packages only when there are packages. A tab
+  // leading to an empty page, or to a page of the template author's words, is
+  // a broken promise in the most visible part of the site.
   const navItems = [
     { to: '/', label: 'Home' },
-    { to: '/offerings', label: 'Offerings' },
-    { to: '/holistic-method', label: config?.methodName ?? 'How we work' },
-    { to: '/about', label: 'About' },
-    ...(packages && packages.length > 0 ? [{ to: '/shop', label: 'Packages' }] : []),
+    { to: '/offerings', label: copy.offeringsLabel },
+    ...(config?.method ? [{ to: '/method', label: config.methodName ?? 'How we work' }] : []),
+    { to: '/about', label: copy.aboutLabel },
+    ...(packages && packages.length > 0 ? [{ to: '/shop', label: copy.packagesLabel }] : []),
   ]
 
   if (isLoading) {
@@ -49,7 +51,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-charcoal/80 text-white backdrop-blur-xl">
       <div className="container flex h-20 items-center gap-4">
         <Link to="/" className="text-lg font-semibold tracking-[0.2em] uppercase text-white/80">
-          {clinicName(config)}
+          {businessName(config)}
         </Link>
         <nav className="ml-auto hidden flex-1 items-center justify-end gap-6 text-sm font-medium text-white/60 lg:flex">
           {navItems.map((item) => (

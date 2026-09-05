@@ -1,4 +1,6 @@
 import { Button } from '@/components/ui/button'
+import { useConfig } from '@/config/ConfigProvider'
+import { copyFor } from '@/constants/copy'
 import { Card, CardContent } from '@/components/ui/card'
 import { api, getImageUrl } from '@/lib/api'
 import { formatPrice } from '@/lib/money'
@@ -10,6 +12,8 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 
 export default function ServiceDetailPage() {
   const { slug } = useParams<{ slug: string }>()
+  const { config } = useConfig()
+  const copy = copyFor(config)
   
   const { data: service, isLoading, error } = useQuery<Service>({
     queryKey: ['service', slug],
@@ -48,7 +52,7 @@ export default function ServiceDetailPage() {
             to="/offerings"
             className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-white/50 transition-colors hover:text-white"
           >
-            ← Back to offerings
+            ← {copy.offeringsLabel}
           </Link>
           <h1 className="text-[clamp(2.5rem,4vw,3.5rem)] font-semibold leading-tight">{service.title}</h1>
           {service.shortDescription && (
@@ -139,7 +143,7 @@ export default function ServiceDetailPage() {
             <div>
               <BookingLink>
                 <Button className="rounded-full bg-lime-glow px-8 py-6 text-charcoal hover:bg-lime-glow/90">
-                  Book this service
+                  {copy.bookLabel}
                 </Button>
               </BookingLink>
             </div>
@@ -156,7 +160,7 @@ export default function ServiceDetailPage() {
                     className="h-full w-full object-cover"
                   />
                 ) : (
-                  <div className="flex h-full items-center justify-center text-white/50">Service Image</div>
+                  <div className="h-full w-full bg-[radial-gradient(circle_at_top,rgb(var(--brand-surface-dark)),rgb(var(--brand-surface-deep)))]" />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-transparent" />
               </div>

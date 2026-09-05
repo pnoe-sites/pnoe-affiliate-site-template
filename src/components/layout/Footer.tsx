@@ -1,6 +1,6 @@
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from 'lucide-react'
 import { useConfig } from '../../config/ConfigProvider'
-import { clinicName } from '../../lib/brand'
+import { businessName } from '../../lib/brand'
 
 const socialIconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   facebook: Facebook,
@@ -23,17 +23,19 @@ export default function Footer() {
       <div className="container py-16">
         <div className="grid gap-12 md:grid-cols-3">
           <div className="space-y-4">
-            {/* A network badge is a claim about who this clinic is affiliated
-                with, so it is stated by the clinic rather than stamped on by
+            {/* A network badge is a claim about who this business is affiliated
+                with, so it is stated by the business rather than stamped on by
                 the template. Every site built from this used to carry the
                 template author's network name above its own. */}
             {config?.networkName && (
               <p className="text-xs uppercase tracking-[0.3em] text-white/50">{config.networkName}</p>
             )}
-            <h3 className="text-2xl font-semibold">{clinicName(config)}</h3>
-            <p className="text-sm text-white/70 max-w-sm">
-              {config?.tagline || 'Clinical testing for longevity'}
-            </p>
+            <h3 className="text-2xl font-semibold">{businessName(config)}</h3>
+            {/* The tagline is the business's own or nothing: the template's
+                line about itself used to stand in here on every site. */}
+            {config?.tagline && (
+              <p className="text-sm text-white/70 max-w-sm">{config.tagline}</p>
+            )}
           </div>
 
           {config?.contact && (
@@ -84,7 +86,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 border-t border-white/5 pt-8 text-center text-xs uppercase tracking-[0.3em] text-white/50">
-          © {new Date().getFullYear()} {clinicName(config)}
+          © {new Date().getFullYear()} {businessName(config)}
         </div>
       </div>
     </footer>
